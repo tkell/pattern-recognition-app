@@ -17,8 +17,16 @@
  * under the License.
  */
 
- var settingsStatus = false;
- var captureStatus = false;
+var settingsStatus = false;
+var captureStatus = false;
+
+var buttonData = [];
+
+// Before we get image input...
+function loadDummyImage() {
+    $("body").css("background-image", "url(img/traffic_test.jpg)");
+}
+
 
  function openSettings() {
         $(".settings").css("visibility", "visible");
@@ -59,7 +67,14 @@ function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
     $(".title").fadeTo(750, 0.0);
     $(".capture").fadeTo(750, 0.0);
-    toggleSettingsMode();
+    loadDummyImage();
+}
+
+function activateManualMode() {
+    $(".title").text("tap image to set button locations");
+    $(".title").fadeTo(750, 1.0, function () {
+        $(".title").fadeTo(3000, 0.0);
+    });
 }
 
 var app = {
@@ -91,6 +106,10 @@ var app = {
         $(".capture-button").on( "tap", function(event) {
             captureImage();
             toggleSettingsMode();
+        });
+
+        $(".manual-button").on( "tap", function(event) {
+            activateManualMode();
         });
   
     },
