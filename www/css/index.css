@@ -59,6 +59,14 @@ hr {
     margin-top: 2%;
 }
 
+.pre-capture {
+    display: block;
+}
+
+.post-capture {
+    display: none;
+}
+
 .settings {
     visibility: hidden;
     opacity: 0;

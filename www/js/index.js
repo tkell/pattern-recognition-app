@@ -18,9 +18,9 @@
  */
 
  var settingsStatus = false;
+ var captureStatus = false;
 
 function toggleSettings() {
-
     if (settingsStatus) {
         $(".settings").fadeTo(750, 0.0, function () {
             $(".settings").css("visibility", "hidden");
@@ -32,8 +32,23 @@ function toggleSettings() {
         $(".settings").fadeTo(750, 1.0);
         settingsStatus = true;
     }
+}
 
+function toggleSettingsMode() {
+    if (captureStatus) {
+        captureStatus = false;
+        $(".pre-capture").css("display", "block");
+        $(".post-capture").css("display", "none");
+    } else {
+        captureStatus = true;
+        $(".pre-capture").css("display", "none");
+        $(".post-capture").css("display", "block");
 
+    }
+}
+
+function captureImage() {
+    console.log("well, this is going to do a lot");
 }
 
 var app = {
@@ -60,6 +75,11 @@ var app = {
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
+        });
+
+        $(".capture-button").on( "tap", function(event) {
+            captureImage();
+            toggleSettingsMode();
         });
   
     },
