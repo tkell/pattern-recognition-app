@@ -17,10 +17,23 @@
  * under the License.
  */
 
-function viewSettings() {
-    $(".logo").css("color", "#FFFFFF");
-    $(".settings").css("visibility", "visible");
-    $(".settings").fadeTo(750, 1.0);
+ var settingsStatus = false;
+
+function toggleSettings() {
+
+    if (settingsStatus) {
+        $(".settings").fadeTo(750, 0.0, function () {
+            $(".settings").css("visibility", "hidden");
+            settingsStatus = false;
+        });
+        
+    } else {
+        $(".settings").css("visibility", "visible");
+        $(".settings").fadeTo(750, 1.0);
+        settingsStatus = true;
+    }
+
+
 }
 
 var app = {
@@ -46,7 +59,7 @@ var app = {
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
-            viewSettings();
+            toggleSettings();
         });
   
     },
