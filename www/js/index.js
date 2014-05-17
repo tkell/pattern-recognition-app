@@ -17,6 +17,12 @@
  * under the License.
  */
 
+function viewSettings() {
+    $(".logo").css("color", "#FFFFFF");
+    $(".settings").css("visibility", "visible");
+    $(".settings").fadeTo(750, 1.0);
+}
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -39,8 +45,8 @@ var app = {
 
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
-        $(".logo").on( "tap", function(event) {
-            $(".logo").css("color", "#FFFFFF");
+        $(".logo-image").on( "tap", function(event) {
+            viewSettings();
         });
   
     },

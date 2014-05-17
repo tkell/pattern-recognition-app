@@ -51,6 +51,7 @@ hr {
     height: 1px; 
     border: 0;
     margin-top: 35%;
+    
 }
 
 .logo {
@@ -58,6 +59,10 @@ hr {
     margin-top: 2%;
 }
 
+.settings {
+    visibility: hidden;
+    opacity: 0;
+}
 
 h1 {
     font-size:24px;
