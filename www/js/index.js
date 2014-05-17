@@ -35,6 +35,8 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
 
     onDeviceReady: function() {
+        $(".listening").css("display", "none"); // maaybneee?
+
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
         $(".logo").on( "tap", function(event) {
