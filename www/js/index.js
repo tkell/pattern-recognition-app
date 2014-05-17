@@ -32,8 +32,8 @@ function loadDummyImage() {
 
 function createLocation(e) {
     var location = {'x': e.pageX, 'y': e.pageY};
-    var circle = paper.circle(location.x, location.y, 10);
-    //circle.attr("fill", "#00EE00");
+    var circle = paper.circle(location.x, location.y, 5);
+    circle.attr("stroke", "#90EE90");
     // we may do more here, eventually....
     buttonData.append({'location': location});
 }
@@ -80,6 +80,10 @@ function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
     $(".title").fadeTo(750, 0.0);
     $(".capture").fadeTo(750, 0.0);
+    // remove title and capture functions
+    $(".capture-button").unbind( "tap");
+
+
     loadDummyImage();
 }
 
