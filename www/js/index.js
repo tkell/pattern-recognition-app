@@ -33,9 +33,9 @@ function loadDummyImage() {
 function createLocation(e) {
     var location = {'x': e.pageX, 'y': e.pageY};
     var circle = paper.circle(location.x, location.y, 10);
-    circle.attr("fill", "#00EE00");
+    //circle.attr("fill", "#00EE00");
     // we may do more here, eventually....
-    buttonData.append(location);
+    buttonData.append({'location': location});
 }
 
 
