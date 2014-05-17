@@ -20,17 +20,24 @@
  var settingsStatus = false;
  var captureStatus = false;
 
-function toggleSettings() {
-    if (settingsStatus) {
-        $(".settings").fadeTo(750, 0.0, function () {
-            $(".settings").css("visibility", "hidden");
-            settingsStatus = false;
-        });
-        
-    } else {
+ function openSettings() {
         $(".settings").css("visibility", "visible");
         $(".settings").fadeTo(750, 1.0);
         settingsStatus = true;
+ }
+
+ function closeSettings() {
+    $(".settings").fadeTo(750, 0.0, function () {
+        $(".settings").css("visibility", "hidden");
+        settingsStatus = false;
+    });
+ }
+
+function toggleSettings() {
+    if (settingsStatus) {
+        closeSettings();
+    } else {
+        openSettings();
     }
 }
 
@@ -49,6 +56,10 @@ function toggleSettingsMode() {
 
 function captureImage() {
     console.log("well, this is going to do a lot");
+    closeSettings();  // Unsure if this is the desired behavior
+    $(".title").fadeTo(750, 0.0);
+    $(".capture").fadeTo(750, 0.0);
+    toggleSettingsMode();
 }
 
 var app = {
