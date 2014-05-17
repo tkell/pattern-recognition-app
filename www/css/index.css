@@ -37,37 +37,51 @@ body {
 
 /* Portrait layout (default) */
 .title {
+    z-index: 10;
     text-align:center;
-    margin-top: 75%;
+    position:absolute;
+    left:50px;
+    top:250px;
 }
 
 .capture {
+    z-index: 10;
     text-align:center;
-    margin-top: 15%;
+    position:absolute;
+    left:125px;
+    top:350px;
 }
 
 hr {
+    z-index: 10;
     background-color: #90EE90; 
     height: 1px; 
     border: 0;
-    margin-top: 35%;
-    
+    position:absolute;
+    left:50px;
+    top:400px;
 }
 
 .logo {
+    z-index: 10;
     text-align:center;
-    margin-top: 2%;
+    position:absolute;
+    left:105px;
+    top:450px;
 }
 
 .pre-capture {
+    z-index: 10;
     display: block;
 }
 
 .post-capture {
+    z-index: 10;
     display: none;
 }
 
 .settings {
+    z-index: 10;
     visibility: hidden;
     opacity: 0;
 }
@@ -79,6 +93,10 @@ h1 {
     overflow:visible;
     padding:0px;
     text-align:center;
+}
+
+canvas {
+    z-index: -1;
 }
 
 @keyframes fade {

@@ -21,11 +21,23 @@ var settingsStatus = false;
 var captureStatus = false;
 
 var buttonData = [];
+var paper;
 
 // Before we get image input...
 function loadDummyImage() {
-    $("body").css("background-image", "url(img/traffic_test.jpg)");
+    var screensize = {x: 868, y: 512};
+    var c = paper.image("img/traffic_test.jpg", 0, 0, screensize.x, screensize.y);
 }
+
+
+function createLocation(e) {
+    var location = {'x': e.pageX, 'y': e.pageY};
+    var circle = paper.circle(location.x, location.y, 10);
+    circle.attr("fill", "#00EE00");
+    // we may do more here, eventually....
+    buttonData.append(location);
+}
+
 
 
  function openSettings() {
@@ -54,11 +66,12 @@ function toggleSettingsMode() {
         captureStatus = false;
         $(".pre-capture").css("display", "block");
         $(".post-capture").css("display", "none");
+        $(".logo").css("left", "105px");
     } else {
         captureStatus = true;
         $(".pre-capture").css("display", "none");
         $(".post-capture").css("display", "block");
-
+        $(".logo").css("left", "80px");
     }
 }
 
@@ -71,7 +84,13 @@ function captureImage() {
 }
 
 function activateManualMode() {
+    $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
+
+    $("svg").on( "tap", function(e) {
+        createLocation(e);
+    });
+
     $(".title").fadeTo(750, 1.0, function () {
         $(".title").fadeTo(3000, 0.0);
     });
@@ -95,7 +114,10 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
 
     onDeviceReady: function() {
-        $(".listening").css("display", "none"); // maaybneee?
+        $(".listening").css("display", "none"); // Trying to get rid of the weird Loading thing...
+
+        var screensize = {x: 868, y: 512};
+        paper = Raphael(0, 0, screensize.x, screensize.y);
 
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
