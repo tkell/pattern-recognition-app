@@ -23,19 +23,84 @@ var captureStatus = false;
 var buttonData = [];
 var paper;
 
-// Before we get image input...
+// Test image input
 function loadDummyImage() {
     var screensize = {x: 868, y: 512};
     var c = paper.image("img/traffic_test.jpg", 0, 0, screensize.x, screensize.y);
 }
 
 
+function prepButtonData() {
+    cleanedButtonData = [];
+    for (var i = 0; i < buttonData.length; i++) {
+        cleanButton = {};
+        keys = Object.keys(buttonData[i]);
+        for (var j = 0; j < keys.length; j++) {
+            if (keys[j] != 'button') {
+                cleanButton[keys[j]] = buttonData[i][keys[j]];
+            }
+        }
+        cleanedButtonData.push(cleanButton);
+    } 
+
+    // Manual adventure slider, for now
+    var adventureVal = 1;
+    return {'buttons': cleanedButtonData, 'adventure': adventureVal};
+}
+
+function sendDataToServer() {
+    // Remove the tap to make a buttn
+    $("svg").unbind("tap");
+
+    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
+    preppedButtonData = prepButtonData();
+
+    var body = JSON.stringify(preppedButtonData);
+    console.log('button data prepared');
+    var req = new XMLHttpRequest();
+    if ('withCredentials' in req) {
+        req.open('POST', url, true);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.onreadystatechange = function() {
+                if (req.readyState === 4) {
+                    console.log('req state is 4', req);
+                    if (req.status == 0 || req.status >= 200) {
+                        var jsonRes = JSON.parse(req.responseText);
+                        $(".about-button").text(jsonRes["result"]);
+
+                        //applyKnownMapping(jsonRes['mapping']);
+                        //drawConnectingLines();
+                        //drawAnnotations(jsonRes['mapping']);
+                        //applyButtonDrawings();
+                    } else {
+                        $(".about-button").text("ERROR");
+                        console.log('Response returned with non-OK status');
+                    }
+                }
+            };
+        req.send(body);
+    }
+}
+
+
 function createLocation(e) {
     var location = {'x': e.pageX, 'y': e.pageY};
+
+    var lineSize = 10;
+    var line1 = paper.path(["M", location.x - lineSize, location.y, "L", location.x + lineSize, location.y]);
+    line1.attr("stroke", "#90EE90");
+    var line2 = paper.path(["M", location.x, location.y - lineSize, "L", location.x, location.y + lineSize]);
+    line2.attr("stroke", "#90EE90");
+
     var circle = paper.circle(location.x, location.y, 5);
     circle.attr("stroke", "#90EE90");
-    // we may do more here, eventually....
-    buttonData.append({'location': location});
+
+    pathString = "M" + location.x + "," + location.y + "L" + location.x + "," + location.y;
+    line1.animate({"path": pathString}, 315);
+    line2.animate({"path": pathString}, 315);
+
+    // we may do more here, eventually, in terms of grabbing colour / estimating shape, etc
+    buttonData.push({'location': location});
 }
 
 
@@ -76,18 +141,19 @@ function toggleSettingsMode() {
 }
 
 function captureImage() {
-    console.log("well, this is going to do a lot");
     closeSettings();  // Unsure if this is the desired behavior
     $(".title").fadeTo(750, 0.0);
     $(".capture").fadeTo(750, 0.0);
     // remove title and capture functions
     $(".capture-button").unbind( "tap");
-
+    $(".capture").css("display", "none");
+    $(".title").css("display", "none");
 
     loadDummyImage();
 }
 
 function activateManualMode() {
+    console.log('Actvating manual button selection...');
     $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
 
@@ -96,7 +162,15 @@ function activateManualMode() {
     });
 
     $(".title").fadeTo(750, 1.0, function () {
-        $(".title").fadeTo(3000, 0.0);
+        $(".title").fadeTo(3000, 0.0, function() {
+            $(".title").css("display", "none");
+        });
+    });
+
+    $(".send").css("display", "block");
+    $(".send").fadeTo(750, 1.0);
+    $(".send").on( "tap", function(e) {
+        sendDataToServer();
     });
 }
 
@@ -122,6 +196,7 @@ var app = {
 
         var screensize = {x: 868, y: 512};
         paper = Raphael(0, 0, screensize.x, screensize.y);
+        console.log('init');
 
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
