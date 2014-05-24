@@ -45,7 +45,7 @@ function prepButtonData() {
 
     // Manual adventure slider, for now
     var adventureVal = 1;
-    return {'buttons': cleanedButtonData, 'adventure': adventureVal};
+    return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
 
 function sendDataToServer() {
@@ -100,7 +100,8 @@ function createLocation(e) {
     line2.animate({"path": pathString}, 315);
 
     // we may do more here, eventually, in terms of grabbing colour / estimating shape, etc
-    buttonData.push({'location': location});
+    // Dummy radius value, as that is needed by the classifier.
+    buttonData.push({'location': location, 'radius': 10});
 }
 
 
