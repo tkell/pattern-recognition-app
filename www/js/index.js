@@ -231,22 +231,7 @@ var app = {
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
-
-            // let's try to make a beep!
-            var audioContext = tsw.context();
-            var source = audioContext.createOscillator();
-            source.type = 0; // sine wave
-            source.frequency.value = 440;
-
-            var gainNode = audioContext.createGainNode();
-            gainNode.gain.value = 1;
-
-            source.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            info("we should have made a gain node");
-            source.noteOn(0);
-            info("we should have heard a sound");
+            synth.playNote(440);
         });
 
         $(".capture-button").on( "tap", function(event) {
