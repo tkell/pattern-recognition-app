@@ -26,8 +26,6 @@ var width;
 var height;
 
 var synth;
-var audioContext;
-audioContext = new window.webkitAudioContext();
 
 function info(textString) {
     $(".debug-info").text(textString);
@@ -210,10 +208,10 @@ var app = {
         paper = Raphael(0, 0, width, height);
 
         // turning off my Synth for now.
-        // synth = new Synth({
-        //     context: tsw.context(),
-        //     speakersOn: true
-        // });
+        synth = new Synth({
+            context: tsw.context(),
+            speakersOn: true
+        });
         
         // Adjust CSS
         $(".title").css("left", width / 9);
@@ -235,7 +233,7 @@ var app = {
             toggleSettings();
 
             // let's try to make a beep!
-            
+            var audioContext = tsw.context();
             var source = audioContext.createOscillator();
             source.type = 0; // sine wave
             source.frequency.value = 440;
