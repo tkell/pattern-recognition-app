@@ -42,6 +42,12 @@ body {
     position:absolute;
     left:50px;
     top:250px;
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
 }
 
 .capture {
@@ -95,15 +101,6 @@ hr {
     z-index: 10;
     visibility: hidden;
     opacity: 0;
-}
-
-h1 {
-    font-size:24px;
-    font-weight:normal;
-    margin:0px;
-    overflow:visible;
-    padding:0px;
-    text-align:center;
 }
 
 canvas {

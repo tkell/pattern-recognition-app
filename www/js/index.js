@@ -22,11 +22,20 @@ var captureStatus = false;
 
 var buttonData = [];
 var paper;
+var width;
+var height;
+
+var synth;
+var audioContext;
+audioContext = new window.webkitAudioContext();
+
+function info(textString) {
+    $(".debug-info").text(textString);
+}
 
 // Test image input
 function loadDummyImage() {
-    var screensize = {x: 868, y: 512};
-    var c = paper.image("img/traffic_test.jpg", 0, 0, screensize.x, screensize.y);
+    var c = paper.image("img/traffic_test.jpg", 0, 0, width, height);
 }
 
 
@@ -66,14 +75,14 @@ function sendDataToServer() {
                     console.log('req state is 4', req);
                     if (req.status == 0 || req.status >= 200) {
                         var jsonRes = JSON.parse(req.responseText);
-                        $(".about-button").text(jsonRes["result"]);
+                        info(jsonRes["result"]);
 
                         //applyKnownMapping(jsonRes['mapping']);
                         //drawConnectingLines();
                         //drawAnnotations(jsonRes['mapping']);
                         //applyButtonDrawings();
                     } else {
-                        $(".about-button").text("ERROR");
+                        info("ERROR");
                         console.log('Response returned with non-OK status');
                     }
                 }
@@ -195,14 +204,51 @@ var app = {
     onDeviceReady: function() {
         $(".listening").css("display", "none"); // Trying to get rid of the weird Loading thing...
 
-        var screensize = {x: 868, y: 512};
-        paper = Raphael(0, 0, screensize.x, screensize.y);
-        console.log('init');
+        width = window.outerWidth;
+        height = window.outerHeight;
+
+        paper = Raphael(0, 0, width, height);
+
+        // turning off my Synth for now.
+        // synth = new Synth({
+        //     context: tsw.context(),
+        //     speakersOn: true
+        // });
+        
+        // Adjust CSS
+        $(".title").css("left", width / 9);
+        $(".title").css("top", height / 3);
+        $(".title").css("font-size", width / 12);
+
+        $(".capture").css("left", width / 2.6);
+        $(".capture").css("top", height / 2);
+        $(".capture").css("font-size", width / 24);
+
+        $(".pre-capture").css("left", width / 3);
+        $(".pre-capture").css("top", height / 1.1);
+        $(".pre-capture").css("font-size", width / 24);
+
 
         // apply functions to the two buttons
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
+
+            // let's try to make a beep!
+            
+            var source = audioContext.createOscillator();
+            source.type = 0; // sine wave
+            source.frequency.value = 440;
+
+            var gainNode = audioContext.createGainNode();
+            gainNode.gain.value = 1;
+
+            source.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            info("we should have made a gain node");
+            source.noteOn(0);
+            info("we should have heard a sound");
         });
 
         $(".capture-button").on( "tap", function(event) {
