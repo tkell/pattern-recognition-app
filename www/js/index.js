@@ -231,7 +231,9 @@ var app = {
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
+            // this in theory unmutes web audio.
             synth.playNote(440);
+            synth.stopNote(440);
         });
 
         $(".capture-button").on( "tap", function(event) {
@@ -241,6 +243,7 @@ var app = {
 
         $(".manual-button").on( "tap", function(event) {
             activateManualMode();
+            synth.playNote(256);
         });
   
     },
