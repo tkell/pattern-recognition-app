@@ -98,8 +98,9 @@ function createLocation(e) {
     var line2 = paper.path(["M", location.x, location.y - lineSize, "L", location.x, location.y + lineSize]);
     line2.attr("stroke", "#90EE90");
 
-    var circle = paper.circle(location.x, location.y, 5);
+    var circle = paper.circle(location.x, location.y, 50);
     circle.attr("stroke", "#90EE90");
+    circle.attr("fill", "#90EE90");
 
     pathString = "M" + location.x + "," + location.y + "L" + location.x + "," + location.y;
     line1.animate({"path": pathString}, 315);

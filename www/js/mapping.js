@@ -10,13 +10,11 @@ function partial(func /*, 0..n args */) {
 // Mouse on / off functions:
 function betterNoteClick(synth, note) {
     synth.playNote(note);
-    console.log(note);
 }
 
 function makeAndMap(theButton, noteFreq) {
         var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
         theButton.button.node.addEventListener("click", mouseDownFunc);
-        console.log(theButton.button.node, note);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
