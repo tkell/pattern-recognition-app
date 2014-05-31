@@ -108,7 +108,7 @@ function createLocation(e) {
 
     // we may do more here, eventually, in terms of grabbing colour / estimating shape, etc
     // Dummy radius value, as that is needed by the classifier.
-    buttonData.push({'location': location, 'radius': 10});
+    buttonData.push({"location": location, "button": circle});
 }
 
 
