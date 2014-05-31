@@ -74,11 +74,10 @@ function sendDataToServer() {
                     if (req.status == 0 || req.status >= 200) {
                         var jsonRes = JSON.parse(req.responseText);
                         info(jsonRes["result"]);
+                        console.log("got a good result");
 
-                        //applyKnownMapping(jsonRes['mapping']);
-                        //drawConnectingLines();
-                        //drawAnnotations(jsonRes['mapping']);
-                        //applyButtonDrawings();
+                        applyKnownMapping(jsonRes['mapping']);
+                        console.log("mappings applied...");
                     } else {
                         info("ERROR");
                         console.log('Response returned with non-OK status');
@@ -239,6 +238,9 @@ var app = {
         $(".capture-button").on( "tap", function(event) {
             captureImage();
             toggleSettingsMode();
+            // debug to make sure that audio is on
+            synth.playNote(880);
+            synth.stopNote(880);
         });
 
         $(".manual-button").on( "tap", function(event) {
