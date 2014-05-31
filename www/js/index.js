@@ -76,9 +76,7 @@ function sendDataToServer() {
                         info(jsonRes["result"]);
 
                         //applyKnownMapping(jsonRes['mapping']);
-                        //drawConnectingLines();
-                        //drawAnnotations(jsonRes['mapping']);
-                        //applyButtonDrawings();
+     
                     } else {
                         info("ERROR");
                         console.log('Response returned with non-OK status');
@@ -207,7 +205,6 @@ var app = {
 
         paper = Raphael(0, 0, width, height);
 
-        // turning off my Synth for now.
         synth = new Synth({
             context: tsw.context(),
             speakersOn: true
@@ -231,9 +228,12 @@ var app = {
         // that's the logo button and the capture image button, for now
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
-            // this in theory unmutes web audio.
-            synth.playNote(440);
-            synth.stopNote(440);
+
+            // This unmutes web audio.  
+            // I will need to figure out how to change the volume of this
+            // but it will do for now.
+            synth.playNote(0);
+            synth.stopNote(0);
         });
 
         $(".capture-button").on( "tap", function(event) {
@@ -242,8 +242,7 @@ var app = {
         });
 
         $(".manual-button").on( "tap", function(event) {
-            activateManualMode();
-            synth.playNote(256);
+            activateManualMode();    
         });
   
     },
