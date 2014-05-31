@@ -56,7 +56,7 @@ function prepButtonData() {
 }
 
 function sendDataToServer() {
-    // Remove the tap to make a buttn
+    // Remove the tap to make a button
     $("svg").unbind("tap");
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
