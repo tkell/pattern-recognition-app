@@ -12,9 +12,10 @@ function betterNoteClick(synth, note) {
     synth.playNote(note);
 }
 
+// Will need to add convincing noteOff, but that can wait.
 function makeAndMap(theButton, noteFreq) {
     var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
-    $(theButton.button.node).on("tap", mouseDownFunc); // moving to jquery
+    $(theButton.button.node).on("tap", mouseDownFunc);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
