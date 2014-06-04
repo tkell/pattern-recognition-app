@@ -12,10 +12,16 @@ function betterNoteClick(synth, note) {
     synth.playNote(note);
 }
 
+function betterNoteStop(synth, note) {
+    synth.stopNote(note);
+}
+
 // Will need to add convincing noteOff, but that can wait.
 function makeAndMap(theButton, noteFreq) {
     var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
-    $(theButton.button.node).on("tap", mouseDownFunc);
+    var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
+    $(theButton.button.node).on("vmousedown", mouseDownFunc);
+    $(theButton.button.node).on("vmouseup", mouseUpFunc);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
