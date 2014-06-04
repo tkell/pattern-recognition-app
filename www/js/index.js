@@ -107,7 +107,6 @@ function createLocation(e) {
     line2.animate({"path": pathString}, 315);
 
     // we may do more here, eventually, in terms of grabbing colour / estimating shape, etc
-    // Dummy radius value, as that is needed by the classifier.
     buttonData.push({"location": location, "button": circle});
 }
 
@@ -214,6 +213,10 @@ var app = {
         });
         
         // Adjust CSS
+        $(".debug-info").css("left", width / 9);
+        $(".debug-info").css("top", height / 10);
+        $(".debug-info").css("font-size", width / 24);
+
         $(".title").css("left", width / 9);
         $(".title").css("top", height / 3);
         $(".title").css("font-size", width / 12);
@@ -222,9 +225,19 @@ var app = {
         $(".capture").css("top", height / 2);
         $(".capture").css("font-size", width / 24);
 
+        $(".send").css("left", width / 3);
+        $(".send").css("top", height / 1.66);
+        $(".send").css("font-size", width / 12);
+
         $(".pre-capture").css("left", width / 3);
         $(".pre-capture").css("top", height / 1.1);
         $(".pre-capture").css("font-size", width / 24);
+
+        $(".post-capture").css("left", width / 4);
+        $(".post-capture").css("top", height / 1.1);
+        $(".post-capture").css("font-size", width / 24);
+
+
 
 
         // apply functions to the two buttons

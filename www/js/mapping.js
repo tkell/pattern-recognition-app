@@ -16,12 +16,15 @@ function betterNoteStop(synth, note) {
     synth.stopNote(note);
 }
 
-// Will need to add convincing noteOff, but that can wait.
+// Gah, this does not do multitouch, for some arcane reason.
 function makeAndMap(theButton, noteFreq) {
     var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
     var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-    $(theButton.button.node).on("vmousedown", mouseDownFunc);
-    $(theButton.button.node).on("vmouseup", mouseUpFunc);
+    theButton.button.node.addEventListener('touchstart', mouseDownFunc); // trying more-raw-things.
+    theButton.button.node.addEventListener('touchend', mouseUpFunc);
+
+    //$(theButton.button.node).on("vmousedown", mouseDownFunc);
+    //$(theButton.button.node).on("vmouseup", mouseUpFunc);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
