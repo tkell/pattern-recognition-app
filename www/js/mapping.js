@@ -16,15 +16,12 @@ function betterNoteStop(synth, note) {
     synth.stopNote(note);
 }
 
-// Gah, this does not do multitouch, for some arcane reason.
+// The jQuery mobile ones are cleaner, but they don't allow multiple touches
 function makeAndMap(theButton, noteFreq) {
     var mouseDownFunc = partial(betterNoteClick, synth, noteFreq);
     var mouseUpFunc = partial(betterNoteStop, synth, noteFreq);
-    theButton.button.node.addEventListener('touchstart', mouseDownFunc); // trying more-raw-things.
+    theButton.button.node.addEventListener('touchstart', mouseDownFunc);
     theButton.button.node.addEventListener('touchend', mouseUpFunc);
-
-    //$(theButton.button.node).on("vmousedown", mouseDownFunc);
-    //$(theButton.button.node).on("vmouseup", mouseUpFunc);
 }
 
 // Takes a list of buttonData, with mapping info, and applies it.
