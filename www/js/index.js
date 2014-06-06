@@ -32,6 +32,30 @@ function loadDummyImage() {
     var c = paper.image("img/traffic_test.jpg", 0, 0, width, height);
 }
 
+function drawConnectingLines() {
+    var allLines = [];
+    for (var i = 0; i < buttonData.length; i++) {
+        var x1 = buttonData[i].location.x;
+        var y1= buttonData[i].location.y;
+
+        for (var j = i + 1; j < buttonData.length; j++) {
+            var x2 = buttonData[j].location.x;
+            var y2= buttonData[j].location.y;
+
+            var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
+            line.attr("stroke", "#FFFFFF");
+            line.attr("opacity", 0);
+            allLines.push(line);
+        }
+    }
+    for (var i = 0; i < allLines.length; i++) {
+        allLines[i].animate({opacity: 0.95}, 1500, function() {
+            this.animate({opacity : 0}, 1000, function() {
+                this.remove();})
+            ;});
+    }
+}
+
 function animateButtonSuccess() {
     for (var i = 0; i < buttonData.length; i++) {
         buttonData[i].button.animate({"fill": "#00FF00"}, 1500);
@@ -81,6 +105,8 @@ function sendDataToServer() {
                         console.log("mappings applied...");
 
                         animateButtonSuccess();
+
+                        drawConnectingLines();
 
                         $(".send").fadeTo(750, 0.0);
                         $(".send").css("display", "none");
