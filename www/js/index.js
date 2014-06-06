@@ -37,6 +37,13 @@ function loadDummyImage() {
 }
 
 
+function animateButtonSuccess() {
+    for (var i = 0; i < buttonData.length; i++) {
+        buttonData[i].button.attr({"fill": "#00FF00"});
+        buttonData[i].button.attr({"fill-opacity": 0.2});
+    }
+}
+
 function prepButtonData() {
     cleanedButtonData = [];
     for (var i = 0; i < buttonData.length; i++) {
@@ -77,6 +84,7 @@ function sendDataToServer() {
                         console.log("got a good result");
 
                         applyKnownMapping(jsonRes['mapping']);
+                        animateButtonSuccess();
                         console.log("mappings applied...");
                     } else {
                         info("ERROR");
