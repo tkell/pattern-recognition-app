@@ -105,9 +105,7 @@ function sendDataToServer() {
                         console.log("mappings applied...");
 
                         animateButtonSuccess();
-
                         drawConnectingLines();
-
                         $(".send").fadeTo(750, 0.0);
                         $(".send").css("display", "none");
 
@@ -268,24 +266,14 @@ var app = {
         $(".post-capture").css("top", height / 1.1);
         $(".post-capture").css("font-size", width / 24);
 
-
-
-
-        // apply functions to the two buttons
-        // that's the logo button and the capture image button, for now
+        // apply functions to buttons
         $(".logo-image").on( "tap", function(event) {
             toggleSettings();
-            // this in theory unmutes web audio.
-            synth.playNote(1);
-            synth.stopNote(1);
         });
 
         $(".capture-button").on( "tap", function(event) {
             captureImage();
             toggleSettingsMode();
-            // debug to make sure that audio is on
-            synth.playNote(880);
-            synth.stopNote(880);
         });
 
         $(".manual-button").on( "tap", function(event) {
