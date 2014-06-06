@@ -27,20 +27,15 @@ var height;
 
 var synth;
 
-function info(textString) {
-    $(".debug-info").text(textString);
-}
-
 // Test image input
 function loadDummyImage() {
     var c = paper.image("img/traffic_test.jpg", 0, 0, width, height);
 }
 
-
 function animateButtonSuccess() {
     for (var i = 0; i < buttonData.length; i++) {
-        buttonData[i].button.attr({"fill": "#00FF00"});
-        buttonData[i].button.attr({"fill-opacity": 0.2});
+        buttonData[i].button.animate({"fill": "#00FF00"}, 1500);
+        buttonData[i].button.animate({"fill-opacity": 0.1}, 1500);
     }
 }
 
@@ -57,7 +52,7 @@ function prepButtonData() {
         cleanedButtonData.push(cleanButton);
     } 
 
-    // Manual adventure slider, for now
+    // Hard code adventure slider, for now
     var adventureVal = 1;
     return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
@@ -78,16 +73,20 @@ function sendDataToServer() {
         req.onreadystatechange = function() {
                 if (req.readyState === 4) {
                     console.log('req state is 4', req);
-                    if (req.status == 0 || req.status >= 200) {
+                    if (req.status == 0 || (req.status >= 200 && req.status < 400)) {
                         var jsonRes = JSON.parse(req.responseText);
-                        info(jsonRes["result"]);
                         console.log("got a good result");
 
                         applyKnownMapping(jsonRes['mapping']);
-                        animateButtonSuccess();
                         console.log("mappings applied...");
+
+                        animateButtonSuccess();
+
+                        $(".send").fadeTo(750, 0.0);
+                        $(".send").css("display", "none");
+
                     } else {
-                        info("ERROR");
+                        $(".send").text("error!");
                         console.log('Response returned with non-OK status');
                     }
                 }
@@ -100,13 +99,15 @@ function sendDataToServer() {
 function createLocation(e) {
     var location = {'x': e.pageX, 'y': e.pageY};
 
-    var lineSize = 10;
+    var lineSize = 75;
+    var circleSize = 50;
+
     var line1 = paper.path(["M", location.x - lineSize, location.y, "L", location.x + lineSize, location.y]);
     line1.attr("stroke", "#90EE90");
     var line2 = paper.path(["M", location.x, location.y - lineSize, "L", location.x, location.y + lineSize]);
     line2.attr("stroke", "#90EE90");
 
-    var circle = paper.circle(location.x, location.y, 50);
+    var circle = paper.circle(location.x, location.y, circleSize);
     circle.attr("stroke", "#90EE90");
     circle.attr("fill", "#90EE90");
 
@@ -221,10 +222,6 @@ var app = {
         });
         
         // Adjust CSS
-        $(".debug-info").css("left", width / 9);
-        $(".debug-info").css("top", height / 10);
-        $(".debug-info").css("font-size", width / 24);
-
         $(".title").css("left", width / 9);
         $(".title").css("top", height / 3);
         $(".title").css("font-size", width / 12);
