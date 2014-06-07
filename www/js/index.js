@@ -83,7 +83,7 @@ function prepButtonData() {
 
 function sendDataToServer() {
     // Remove the tap to make a button
-    $("svg").unbind("tap");
+    $("svg").off("touchstart");
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     preppedButtonData = prepButtonData();
@@ -121,7 +121,7 @@ function sendDataToServer() {
 
 
 function createLocation(e) {
-    var location = {'x': e.pageX, 'y': e.pageY};
+    var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
 
     var lineSize = 75;
     var circleSize = 50;
@@ -141,7 +141,7 @@ function createLocation(e) {
 
     // we may do more here, eventually, in terms of grabbing colour / estimating shape, etc
     buttonData.push({"location": location, "button": circle});
-}
+};
 
 
 
@@ -196,8 +196,10 @@ function activateManualMode() {
     console.log('Actvating manual button selection...');
     $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
+    
+    var wombatFunction;
 
-    $("svg").on( "tap", function(e) {
+    $("svg").on("touchstart", function(e) {
         createLocation(e);
     });
 
