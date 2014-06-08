@@ -33,6 +33,10 @@ function loadDummyImage() {
     var c = paper.image(dummyImagePath, 0, 0, width, height);
 }
 
+errorFunc = function(e) {
+    console.log('failed',e);
+}
+
 function drawConnectingLines() {
     var allLines = [];
     for (var i = 0; i < buttonData.length; i++) {
@@ -198,9 +202,6 @@ function activateManualMode() {
     console.log('Actvating manual button selection...');
     $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
-    
-    var wombatFunction;
-
     $("svg").on("touchstart", function(e) {
         createLocation(e);
     });
@@ -243,7 +244,16 @@ var app = {
 
         paper = Raphael(0, 0, width, height);
 
-        // turning off my Synth for now.
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+
+        var video = $("video");
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({video: true}, function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+            }, errorFunc);
+        }
+
         synth = new Synth({
             context: tsw.context(),
             speakersOn: true
