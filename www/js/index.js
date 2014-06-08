@@ -29,7 +29,8 @@ var synth;
 
 // Test image input
 function loadDummyImage() {
-    var c = paper.image("img/traffic_test.jpg", 0, 0, width, height);
+    var dummyImagePath = "img/traffic_test.jpg";
+    var c = paper.image(dummyImagePath, 0, 0, width, height);
 }
 
 function drawConnectingLines() {
@@ -60,6 +61,7 @@ function animateButtonSuccess() {
     for (var i = 0; i < buttonData.length; i++) {
         buttonData[i].button.animate({"fill": "#00FF00"}, 1500);
         buttonData[i].button.animate({"fill-opacity": 0.1}, 1500);
+        buttonData[i].button.animate({"fill": "#FFFFFF"}, 4500);
     }
 }
 
@@ -256,9 +258,9 @@ var app = {
         $(".capture").css("top", height / 2);
         $(".capture").css("font-size", width / 24);
 
-        $(".send").css("left", width / 3);
-        $(".send").css("top", height / 1.66);
-        $(".send").css("font-size", width / 12);
+        $(".send").css("left", width / 2.75);
+        $(".send").css("top", height / 1.15);
+        $(".send").css("font-size", width / 18);
 
         $(".pre-capture").css("left", width / 3);
         $(".pre-capture").css("top", height / 1.1);
