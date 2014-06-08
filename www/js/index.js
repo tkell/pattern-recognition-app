@@ -198,8 +198,6 @@ function activateManualMode() {
     console.log('Actvating manual button selection...');
     $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
-    
-    var wombatFunction;
 
     $("svg").on("touchstart", function(e) {
         createLocation(e);
@@ -213,9 +211,10 @@ function activateManualMode() {
 
     $(".send").css("display", "block");
     $(".send").fadeTo(750, 1.0);
-    $(".send").on( "tap", function(e) {
+    $(".send").on("touchstart", function(e) {
         sendDataToServer();
     });
+    closeSettings();
 }
 
 var app = {
