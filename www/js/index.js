@@ -33,9 +33,20 @@ function loadDummyImage() {
     var c = paper.image(dummyImagePath, 0, 0, width, height);
 }
 
-errorFunc = function(e) {
+function onCameraFail(e) {
     console.log('failed',e);
 }
+
+function onCameraSuccess(imageURI) {
+    var image = document.getElementById('myImage');
+    image.src = imageURI;
+}
+
+function loadRealPicture() {
+    navigator.camera.getPicture(onCameraSuccess, onCameraFail,
+        {quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+}
+
 
 function drawConnectingLines() {
     var allLines = [];
@@ -195,7 +206,9 @@ function captureImage() {
     $(".capture").css("display", "none");
     $(".title").css("display", "none");
 
-    loadDummyImage();
+
+    loadRealPicture();
+    //loadDummyImage();
 }
 
 function activateManualMode() {
@@ -243,16 +256,6 @@ var app = {
         height = window.outerHeight;
 
         paper = Raphael(0, 0, width, height);
-
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-
-        var video = $("video");
-
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia({video: true}, function(stream) {
-                video.src = window.URL.createObjectURL(stream);
-            }, errorFunc);
-        }
 
         synth = new Synth({
             context: tsw.context(),
