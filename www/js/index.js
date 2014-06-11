@@ -41,11 +41,15 @@ function onCameraSuccess(imageURI) {
     //var image = document.getElementById('myImage');
     //image.src = imageURI;
     var c = paper.image(imageURI, 0, 0, width, height);
+
+    //c.transform("R90");
 }
 
 function loadRealPicture() {
     navigator.camera.getPicture(onCameraSuccess, onCameraFail,
-        {quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+        {quality: 50, 
+         destinationType: Camera.DestinationType.FILE_URI, 
+         correctOrientation: true});
 }
 
 
