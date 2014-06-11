@@ -38,8 +38,9 @@ function onCameraFail(e) {
 }
 
 function onCameraSuccess(imageURI) {
-    var image = document.getElementById('myImage');
-    image.src = imageURI;
+    //var image = document.getElementById('myImage');
+    //image.src = imageURI;
+    var c = paper.image(imageURI, 0, 0, width, height);
 }
 
 function loadRealPicture() {
