@@ -33,6 +33,56 @@ function loadDummyImage() {
     var c = paper.image(dummyImagePath, 0, 0, width, height);
 }
 
+function onCameraFail(e) {
+    console.log('failed',e);
+}
+
+function onCameraSuccess(imageURI) {
+    //var image = document.getElementById('myImage');
+    //image.src = imageURI;
+    var c = paper.image(imageURI, 0, 0, width, height);
+}
+
+function loadRealPicture() {
+    navigator.camera.getPicture(onCameraSuccess, onCameraFail,
+        {quality: 50, 
+         destinationType: Camera.DestinationType.FILE_URI, 
+         correctOrientation: true});
+}
+
+
+function drawConnectingLines() {
+    var allLines = [];
+    for (var i = 0; i < buttonData.length; i++) {
+        var x1 = buttonData[i].location.x;
+        var y1= buttonData[i].location.y;
+
+        for (var j = i + 1; j < buttonData.length; j++) {
+            var x2 = buttonData[j].location.x;
+            var y2= buttonData[j].location.y;
+
+            var line = paper.path( ["M", x1, y1, "L", x2, y2 ] );
+            line.attr("stroke", "#FFFFFF");
+            line.attr("opacity", 0);
+            allLines.push(line);
+        }
+    }
+    for (var i = 0; i < allLines.length; i++) {
+        allLines[i].animate({opacity: 0.95}, 1500, function() {
+            this.animate({opacity : 0}, 1000, function() {
+                this.remove();})
+            ;});
+    }
+}
+
+function animateButtonSuccess() {
+    for (var i = 0; i < buttonData.length; i++) {
+        buttonData[i].button.animate({"fill": "#00FF00"}, 1500);
+        buttonData[i].button.animate({"fill-opacity": 0.1}, 1500);
+        buttonData[i].button.animate({"fill": "#FFFFFF"}, 4500);
+    }
+}
+
 function prepButtonData() {
     cleanedButtonData = [];
     for (var i = 0; i < buttonData.length; i++) {
@@ -160,14 +210,15 @@ function captureImage() {
     $(".capture").css("display", "none");
     $(".title").css("display", "none");
 
-    loadDummyImage();
+
+    loadRealPicture();
+    //loadDummyImage();
 }
 
 function activateManualMode() {
     console.log('Actvating manual button selection...');
     $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
-
     $("svg").on("touchstart", function(e) {
         createLocation(e);
     });
@@ -211,7 +262,6 @@ var app = {
 
         paper = Raphael(0, 0, width, height);
 
-        // turning off my Synth for now.
         synth = new Synth({
             context: tsw.context(),
             speakersOn: true
