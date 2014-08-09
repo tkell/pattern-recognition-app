@@ -203,7 +203,13 @@ function toggleSettingsMode() {
 
 // Dispose of the old image, get a new one.
 function getNew() {
-    console.log("would get a new image");
+    console.log("clearing paper");
+    // we need to clear...what?  all the buttons?
+    paper.clear();
+    buttonData = [];
+
+    // and the just call captureImage, right?
+    captureImage();
 }
 
 function captureImage() {
@@ -214,7 +220,6 @@ function captureImage() {
     $(".capture-button").unbind( "tap");
     $(".capture").css("display", "none");
     $(".title").css("display", "none");
-
 
     loadRealPicture();
     //loadDummyImage();
@@ -303,7 +308,7 @@ var app = {
             toggleSettingsMode();
         });
 
-        $(".capture-button").on( "tap", function(event) {
+        $(".new-button").on( "tap", function(event) {
             getNew();
         });
 
