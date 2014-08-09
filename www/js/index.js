@@ -41,6 +41,7 @@ function onCameraSuccess(imageURI) {
     //var image = document.getElementById('myImage');
     //image.src = imageURI;
     var c = paper.image(imageURI, 0, 0, width, height);
+    activateManualMode();
 }
 
 function loadRealPicture() {
@@ -97,7 +98,7 @@ function prepButtonData() {
     } 
 
     // Hard code adventure slider, for now
-    var adventureVal = 1;
+    var adventureVal = 0;
     return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
 
@@ -204,11 +205,8 @@ function toggleSettingsMode() {
 // Dispose of the old image, get a new one.
 function getNew() {
     console.log("clearing paper");
-    // we need to clear...what?  all the buttons?
     paper.clear();
     buttonData = [];
-
-    // and the just call captureImage, right?
     captureImage();
 }
 
@@ -310,12 +308,7 @@ var app = {
 
         $(".new-button").on( "tap", function(event) {
             getNew();
-        });
-
-        $(".manual-button").on( "tap", function(event) {
-            activateManualMode();
-        });
-  
+        }); 
     },
 
 };
