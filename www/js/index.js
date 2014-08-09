@@ -201,6 +201,11 @@ function toggleSettingsMode() {
     }
 }
 
+// Dispose of the old image, get a new one.
+function getNew() {
+    console.log("would get a new image");
+}
+
 function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
     $(".title").fadeTo(750, 0.0);
@@ -296,6 +301,10 @@ var app = {
         $(".capture-button").on( "tap", function(event) {
             captureImage();
             toggleSettingsMode();
+        });
+
+        $(".capture-button").on( "tap", function(event) {
+            getNew();
         });
 
         $(".manual-button").on( "tap", function(event) {
