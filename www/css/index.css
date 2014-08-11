@@ -107,6 +107,10 @@ canvas {
     z-index: -1;
 }
 
+div.ui-loader {
+    display: none;
+}
+
 @keyframes fade {
     from { opacity: 1.0; }
     50% { opacity: 0.4; }
