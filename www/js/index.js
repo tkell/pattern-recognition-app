@@ -44,6 +44,9 @@ function onCameraSuccess(imageURI) {
     activateManualMode();
 }
 
+// Had to remove EXIF code from CDVCamera.m, 
+// in order to not get the location services pop-up.
+// Explanation here:  http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app
 function loadRealPicture() {
     navigator.camera.getPicture(onCameraSuccess, onCameraFail,
         {quality: 50, 
