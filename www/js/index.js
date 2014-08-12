@@ -132,7 +132,7 @@ function sendDataToServer() {
                         drawConnectingLines();
                         applyButtonDrawings();
                         $(".send").fadeTo(750, 0.0);
-                        $(".send").css("display", "none");
+                        $(".send").css("visibility", "hidden");
 
                     } else {
                         $(".send").text("error!");
@@ -228,7 +228,6 @@ function captureImage() {
 
 function activateManualMode() {
     console.log('Actvating manual button selection...');
-    $(".title").css("left", "80px");
     $(".title").text("tap image to set button locations");
     $("svg").on("touchstart", function(e) {
         createLocation(e);
@@ -236,7 +235,7 @@ function activateManualMode() {
 
     $(".title").fadeTo(750, 1.0, function () {
         $(".title").fadeTo(3000, 0.0, function() {
-            $(".title").css("display", "none");
+            $(".title").css("visibility", "hidden");
         });
     });
 
@@ -266,8 +265,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
 
     onDeviceReady: function() {
-        $(".listening").css("display", "none"); // Trying to get rid of the weird Loading thing...
-
         width = window.outerWidth;
         height = window.outerHeight;
 
@@ -279,24 +276,12 @@ var app = {
         });
         
         // Adjust CSS
-        $(".title").css("left", width / 9);
-        $(".title").css("top", height / 3);
         $(".title").css("font-size", width / 12);
-
-        $(".capture").css("left", width / 2.6);
-        $(".capture").css("top", height / 2);
         $(".capture").css("font-size", width / 24);
 
-        $(".send").css("left", width / 2.75);
-        $(".send").css("top", height / 1.15);
         $(".send").css("font-size", width / 18);
 
-        $(".pre-capture").css("left", width / 3);
-        $(".pre-capture").css("top", height / 1.1);
         $(".pre-capture").css("font-size", width / 24);
-
-        $(".post-capture").css("left", width / 4);
-        $(".post-capture").css("top", height / 1.1);
         $(".post-capture").css("font-size", width / 24);
 
         // apply functions to buttons

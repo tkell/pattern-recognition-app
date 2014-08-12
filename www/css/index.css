@@ -39,23 +39,19 @@ body {
 .title {
     z-index: 10;
     text-align:center;
-    position:absolute;
-    left:50px;
-    top:250px;
+    margin-top:50%;
     font-size:24px;
     font-weight:normal;
-    margin:0px;
     overflow:visible;
     padding:0px;
-    text-align:center;
+    position:relative;
 }
 
 .capture {
     z-index: 10;
     text-align:center;
-    position:absolute;
-    left:125px;
-    top:350px;
+    margin-top:5%;
+    position:relative;
 }
 
 hr {
@@ -71,30 +67,31 @@ hr {
 .send {
     z-index: 10;
     text-align:center;
-    position:absolute;
-    left:115px;
-    top:425px;
+    margin-top:60%;
     display:none;
     opacity: 0;
+    position:relative;
 }
 
 
 .logo {
     z-index: 10;
     text-align:center;
-    position:absolute;
-    left:105px;
-    top:450px;
+    margin-top:30%;
+    position:relative;
+
 }
 
 .pre-capture {
     z-index: 10;
     display: block;
+    position:relative;
 }
 
 .post-capture {
     z-index: 10;
     display: none;
+    position:relative;
 }
 
 .settings {
