@@ -54,15 +54,6 @@ body {
     position:relative;
 }
 
-hr {
-    z-index: 10;
-    background-color: #90EE90; 
-    height: 1px; 
-    border: 0;
-    position:absolute;
-    left:50px;
-    top:400px;
-}
 
 .send {
     z-index: 10;
@@ -76,10 +67,9 @@ hr {
 
 .logo {
     z-index: 10;
-    text-align:center;
-    margin-top:30%;
+    text-align:right;
+    margin-top:50%;
     position:relative;
-
 }
 
 .pre-capture {

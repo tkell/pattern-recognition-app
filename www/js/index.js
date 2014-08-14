@@ -106,7 +106,6 @@ function prepButtonData() {
     return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
 
-// THINGS CHANGE HERE
 function sendDataToServer() {
     // Remove the tap to make a button
     $("svg").off("touchstart");
@@ -233,7 +232,7 @@ function activateManualMode() {
     console.log('Actvating manual button selection...');
 
     $(".title").css("visibility", "visible");
-    $(".title").text("tap image to set button locations");
+    $(".title").text("tap to make buttons");
     $("svg").on("touchstart", function(e) {
         createLocation(e);
     });
@@ -283,8 +282,8 @@ var app = {
         
         // Adjust CSS
         $(".title").css("font-size", width / 12);
-        $(".capture").css("font-size", width / 24);
-        $(".send").css("font-size", width / 24);
+        $(".capture").css("font-size", width / 18);
+        $(".send").css("font-size", width / 18);
 
         $(".pre-capture").css("font-size", width / 24);
         $(".post-capture").css("font-size", width / 24);
