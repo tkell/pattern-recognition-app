@@ -31,6 +31,7 @@ var synth;
 function loadDummyImage() {
     var dummyImagePath = "img/traffic_test.jpg";
     var c = paper.image(dummyImagePath, 0, 0, width, height);
+    activateManualMode();
 }
 
 function onCameraFail(e) {
@@ -105,6 +106,7 @@ function prepButtonData() {
     return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
 }
 
+// THINGS CHANGE HERE
 function sendDataToServer() {
     // Remove the tap to make a button
     $("svg").off("touchstart");
@@ -215,12 +217,13 @@ function getNew() {
 
 function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
+
     $(".title").fadeTo(750, 0.0);
+    $(".title").css("visbility", "hidden");
+
     $(".capture").fadeTo(750, 0.0);
-    // remove title and capture functions
     $(".capture-button").unbind( "tap");
     $(".capture").css("display", "none");
-    $(".title").css("display", "none");
 
     loadRealPicture();
     //loadDummyImage();
@@ -228,6 +231,8 @@ function captureImage() {
 
 function activateManualMode() {
     console.log('Actvating manual button selection...');
+
+    $(".title").css("visibility", "visible");
     $(".title").text("tap image to set button locations");
     $("svg").on("touchstart", function(e) {
         createLocation(e);
@@ -239,6 +244,7 @@ function activateManualMode() {
         });
     });
 
+    $(".send").css("visibility", "visible");
     $(".send").css("display", "block");
     $(".send").fadeTo(750, 1.0);
     $(".send").on("touchstart", function(e) {
@@ -278,8 +284,7 @@ var app = {
         // Adjust CSS
         $(".title").css("font-size", width / 12);
         $(".capture").css("font-size", width / 24);
-
-        $(".send").css("font-size", width / 18);
+        $(".send").css("font-size", width / 24);
 
         $(".pre-capture").css("font-size", width / 24);
         $(".post-capture").css("font-size", width / 24);
