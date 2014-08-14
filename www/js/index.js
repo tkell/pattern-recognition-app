@@ -197,12 +197,10 @@ function toggleSettingsMode() {
         captureStatus = false;
         $(".pre-capture").css("display", "block");
         $(".post-capture").css("display", "none");
-        $(".logo").css("left", "105px");
     } else {
         captureStatus = true;
         $(".pre-capture").css("display", "none");
         $(".post-capture").css("display", "block");
-        $(".logo").css("left", "80px");
     }
 }
 
