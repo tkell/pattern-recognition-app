@@ -91,6 +91,15 @@ body {
     opacity: 0;
 }
 
+.about {
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    left: 15px;
+    width: 98%;
+    position:absolute;
+}
+
 canvas {
     z-index: -1;
 }

@@ -19,6 +19,7 @@
 
 var settingsStatus = false;
 var captureStatus = false;
+var playbackStatus = false;
 
 var buttonData = [];
 var paper;
@@ -42,6 +43,8 @@ function onCameraSuccess(imageURI) {
     //var image = document.getElementById('myImage');
     //image.src = imageURI;
     var c = paper.image(imageURI, 0, 0, width, height);
+
+    playbackStatus = false;
     activateManualMode();
 }
 
@@ -109,6 +112,7 @@ function prepButtonData() {
 function sendDataToServer() {
     // Remove the tap to make a button
     $("svg").off("touchstart");
+    playbackStatus = true;
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     preppedButtonData = prepButtonData();
@@ -169,8 +173,6 @@ function createLocation(e) {
     buttonData.push({"location": location, "button": circle});
 };
 
-
-
  function openSettings() {
         $(".settings").css("visibility", "visible");
         $(".settings").fadeTo(750, 1.0);
@@ -201,6 +203,37 @@ function toggleSettingsMode() {
         captureStatus = true;
         $(".pre-capture").css("display", "none");
         $(".post-capture").css("display", "block");
+    }
+}
+
+function displayAbout() {
+    // Display the about text, with a 'close' button
+    $(".about").css("visibility", "visible");
+    $(".about").fadeTo(750, 1.0);
+
+    $(".title").css("visibility", "hidden");
+    $(".send").css("visibility", "hidden");
+    $(".capture").css("visibility", "hidden");
+
+    $(".title").css("opacity", 0.0);
+    $(".send").css("opacity", 0.0);
+    $(".capture").css("opacity", 0.0);
+}
+
+
+function hideAbout() {
+    // Hide the about text, with a 'close' button
+    $(".about").css("visibility", "hidden");
+    $(".about").css("opacity", 0.0);
+
+    if (captureStatus && !playbackStatus) {
+        $(".send").css("visibility", "visible");
+        $(".send").fadeTo(750, 1.0);
+    } else if (!captureStatus) {
+        $(".title").css("visibility", "visible");
+        $(".title").fadeTo(750, 1.0);
+        $(".capture").css("visibility", "visible");   
+        $(".capture").fadeTo(750, 1.0);
     }
 }
 
@@ -285,6 +318,7 @@ var app = {
 
         $(".pre-capture").css("font-size", width / 24);
         $(".post-capture").css("font-size", width / 24);
+        $(".about").css("font-size", width / 24);
 
         // apply functions to buttons
         $(".logo-image").on( "tap", function(event) {
@@ -298,6 +332,15 @@ var app = {
 
         $(".new-button").on( "tap", function(event) {
             getNew();
+        }); 
+
+        $(".about-button").on( "tap", function(event) {
+            displayAbout();
+        });
+
+
+        $(".close-about-button").on( "tap", function(event) {
+            hideAbout();
         }); 
     },
 
