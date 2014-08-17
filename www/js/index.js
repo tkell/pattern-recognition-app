@@ -22,6 +22,8 @@ var captureStatus = false;
 var playbackStatus = false;
 
 var buttonData = [];
+var adventure = 0;
+
 var paper;
 var width;
 var height;
@@ -104,9 +106,8 @@ function prepButtonData() {
         cleanedButtonData.push(cleanButton);
     } 
 
-    // Hard code adventure slider, for now
-    var adventureVal = 0;
-    return {'buttonData': cleanedButtonData, 'adventure': adventureVal};
+    // adventure is automatically updated via the UI
+    return {'buttonData': cleanedButtonData, 'adventure': adventure};
 }
 
 function sendDataToServer() {
@@ -229,9 +230,9 @@ function displaySettings() {
         hideSettings();
     }); 
 
+    updateAdventure();
     $(".logo").css("margin-top", "95%");
 }
-
 
 function hideSettings() {
     // Hide the settings page, display the main page
@@ -260,6 +261,25 @@ function hideSettings() {
     }); 
 
     $(".logo").css("margin-top", "50%");
+}
+
+
+function increaseAdventure() {
+    if (adventure < 4) {
+        adventure = adventure + 1;
+        updateAdventure();
+    }
+}
+
+function decreaseAdventure() {
+    if (adventure > 0) {
+        adventure = adventure - 1;
+        updateAdventure();
+    }
+}
+
+function updateAdventure() {
+    $(".adventure-value").text(adventure + 1);
 }
 
 // Dispose of the old image, get a new one.
@@ -368,6 +388,14 @@ var app = {
         $("body").on("tap", ".close-settings-button", function(event) {
             hideSettings();
         }); 
+
+        $("body").on("tap", ".adventure-up", function(event) {
+            increaseAdventure();
+        });
+
+        $("body").on("tap", ".adventure-down", function(event) {
+            decreaseAdventure();
+        });  
     },
 
 };
