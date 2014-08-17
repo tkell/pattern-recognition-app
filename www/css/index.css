@@ -91,13 +91,12 @@ body {
     opacity: 0;
 }
 
-.about {
+
+.settings-page {
     z-index: 10;
-    visibility: hidden;
+    display:none;
     opacity: 0;
-    left: 15px;
-    width: 98%;
-    position:absolute;
+    position:relative;
 }
 
 canvas {

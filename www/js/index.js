@@ -206,11 +206,8 @@ function toggleSettingsMode() {
     }
 }
 
-function displayAbout() {
-    // Display the about text, with a 'close' button
-    $(".about").css("visibility", "visible");
-    $(".about").fadeTo(750, 1.0);
-
+function displaySettings() {
+    // Display the settings page
     $(".title").css("visibility", "hidden");
     $(".send").css("visibility", "hidden");
     $(".capture").css("visibility", "hidden");
@@ -218,23 +215,51 @@ function displayAbout() {
     $(".title").css("opacity", 0.0);
     $(".send").css("opacity", 0.0);
     $(".capture").css("opacity", 0.0);
+
+    $(".title").css("display", "none");
+    $(".send").css("display", "none");
+    $(".capture").css("display", "none");
+
+    $(".settings-page").css("display", "block");
+    $(".settings-page").css("visibility", "visible");
+    $(".settings-page").fadeTo(750, 1.0);
+
+    $(".settings-button").off("tap"); 
+    $(".settings-button").on( "tap", function(event) {
+        hideSettings();
+    }); 
+
+    $(".logo").css("margin-top", "95%");
 }
 
 
-function hideAbout() {
-    // Hide the about text, with a 'close' button
-    $(".about").css("visibility", "hidden");
-    $(".about").css("opacity", 0.0);
+function hideSettings() {
+    // Hide the settings page, display the main page
+    $(".settings-page").css("visibility", "hidden");
+    $(".settings-page").css("display", "none");
+    $(".settings-page").css("opacity", 0.0);
 
     if (captureStatus && !playbackStatus) {
+        $(".send").css("display", "block");
         $(".send").css("visibility", "visible");
         $(".send").fadeTo(750, 1.0);
     } else if (!captureStatus) {
+        $(".title").css("display", "block");
+        $(".capture").css("display", "block");
+
         $(".title").css("visibility", "visible");
-        $(".title").fadeTo(750, 1.0);
         $(".capture").css("visibility", "visible");   
+
+        $(".title").fadeTo(750, 1.0);       
         $(".capture").fadeTo(750, 1.0);
     }
+
+    $(".settings-button").off("tap"); 
+    $(".settings-button").on( "tap", function(event) {
+        displaySettings();
+    }); 
+
+    $(".logo").css("margin-top", "50%");
 }
 
 // Dispose of the old image, get a new one.
@@ -320,27 +345,28 @@ var app = {
         $(".post-capture").css("font-size", width / 24);
         $(".about").css("font-size", width / 24);
 
-        // apply functions to buttons
-        $(".logo-image").on( "tap", function(event) {
+
+        $(".logo-image").on("tap", function(event) {
             toggleSettings();
         });
 
-        $(".capture-button").on( "tap", function(event) {
+        $(".capture-button").on("tap", function(event) {
             captureImage();
             toggleSettingsMode();
         });
 
-        $(".new-button").on( "tap", function(event) {
+        $(".new-button").on("tap", function(event) {
             getNew();
         }); 
 
-        $(".about-button").on( "tap", function(event) {
-            displayAbout();
+
+        $(".settings-button").on("tap", function(event) {
+            displaySettings();
         });
 
-
-        $(".close-about-button").on( "tap", function(event) {
-            hideAbout();
+        // Magic jQuery thing to catch elements added later
+        $("body").on("tap", ".close-settings-button", function(event) {
+            hideSettings();
         }); 
     },
 
