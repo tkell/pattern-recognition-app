@@ -126,14 +126,12 @@ function sendDataToServer() {
         req.setRequestHeader('Content-Type', 'application/json');
         req.onreadystatechange = function() {
                 if (req.readyState === 4) {
-                    console.log('req state is 4', req);
                     if (req.status == 0 || (req.status >= 200 && req.status < 400)) {
                         var jsonRes = JSON.parse(req.responseText);
-                        console.log("got a good result");
 
                         applyKnownMapping(jsonRes['mapping']);
-                        console.log("mappings applied...");
 
+                        $(".current-mapping").text("current mapping:  " + jsonRes['result']);
                         animateButtonSuccess();
                         drawConnectingLines();
                         applyButtonDrawings();
@@ -363,8 +361,8 @@ var app = {
 
         $(".pre-capture").css("font-size", width / 24);
         $(".post-capture").css("font-size", width / 24);
-        $(".about").css("font-size", width / 24);
 
+        $(".settings-page").css("font-size", width / 24);
 
         $(".logo-image").on("tap", function(event) {
             toggleSettings();
