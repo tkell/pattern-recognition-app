@@ -21,6 +21,8 @@ var settingsStatus = false;
 var captureStatus = false;
 var playbackStatus = false;
 
+var openingVisuals;
+
 var buttonData = [];
 var adventure = 0;
 
@@ -206,6 +208,8 @@ function toggleSettingsMode() {
 }
 
 function displaySettings() {
+    clearInterval(openingVisuals);
+    
     // Display the settings page
     $(".title").css("visibility", "hidden");
     $(".send").css("visibility", "hidden");
@@ -303,6 +307,7 @@ function getNew() {
 
 function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
+    clearInterval(openingVisuals);
 
     $(".title").fadeTo(750, 0.0);
     $(".title").css("visbility", "hidden");
@@ -408,7 +413,7 @@ var app = {
             decreaseAdventure();
         });
 
-        setInterval(drawOpeningFlair, 3000);
+        openingVisuals = setInterval(drawOpeningFlair, 3000);
 
     },
 
