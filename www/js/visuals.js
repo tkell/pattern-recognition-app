@@ -6,7 +6,16 @@
 function drawOpeningFlair() {
     var allLines = [];
 
-    fauxData = [{x: 25, y: 25}, {x: 50, y: 25}, {x: 25, y: 50}, {x: 50, y: 50}];
+    // fauxData = [{x: 25, y: 25}, {x: 50, y: 25}, {x: 25, y: 50}, {x: 50, y: 50}];
+    fauxData = makeLine();
+
+    paths = [
+        ["M", 0, 0, "L", 0, 0 ],
+        ["M", width, 0, "L", width, 0 ],
+        ["M", 0, height, "L", 0, height],
+        ["M", width, height, "L", width, height]
+    ]
+    path_index = Math.floor(Math.random() * 3);
 
     for (var i = 0; i < fauxData.length; i++) {
             if (i < fauxData.length - 1) {
@@ -29,7 +38,7 @@ function drawOpeningFlair() {
 
     for (var i = 0; i < allLines.length; i++) {
         allLines[i].animate({opacity: 0.95}, 1500, function() {
-            this.animate({opacity: 0, path: ["M", 0, 0, "L", 0, 0 ]}, 1000, function() {
+            this.animate({opacity: 0, path: paths[path_index]}, 1000, function() {
                 this.remove();
                 });
             });
