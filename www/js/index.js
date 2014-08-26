@@ -207,9 +207,7 @@ function toggleSettingsMode() {
     }
 }
 
-function displaySettings() {
-    clearInterval(openingVisuals);
-    
+function displaySettings() {   
     // Display the settings page
     $(".title").css("visibility", "hidden");
     $(".send").css("visibility", "hidden");
