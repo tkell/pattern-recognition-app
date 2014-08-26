@@ -406,7 +406,10 @@ var app = {
 
         $("body").on("tap", ".adventure-down", function(event) {
             decreaseAdventure();
-        });  
+        });
+
+        setInterval(drawOpeningFlair, 3000);
+
     },
 
 };
