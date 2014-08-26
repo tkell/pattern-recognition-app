@@ -229,19 +229,23 @@ function displaySettings() {
     }); 
 
     updateAdventure();
-    $(".logo").css("margin-top", "95%");
+    $(".logo").css("margin-top", "65%");
 }
 
 function hideSettings() {
-    // Hide the settings page, display the main page
+    // Hide the settings page
     $(".settings-page").css("visibility", "hidden");
     $(".settings-page").css("display", "none");
     $(".settings-page").css("opacity", 0.0);
 
+    // For the capture page
     if (captureStatus && !playbackStatus) {
+        $(".title").css("display", "block");
         $(".send").css("display", "block");
         $(".send").css("visibility", "visible");
         $(".send").fadeTo(750, 1.0);
+
+    // For the main page
     } else if (!captureStatus) {
         $(".title").css("display", "block");
         $(".capture").css("display", "block");
@@ -252,13 +256,22 @@ function hideSettings() {
         $(".title").fadeTo(750, 1.0);       
         $(".capture").fadeTo(750, 1.0);
     }
+    // For playback
+    else if (playbackStatus) {
+        $(".title").css("display", "block");
+        $(".capture").css("display", "block");
+        $(".title").css("visibility", "visible");
+        $(".capture").css("visibility", "visible");         
+    }
+
 
     $(".settings-button").off("tap"); 
     $(".settings-button").on( "tap", function(event) {
         displaySettings();
     }); 
-
     $(".logo").css("margin-top", "50%");
+
+    
 }
 
 
