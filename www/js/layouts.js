@@ -3,7 +3,7 @@ function makeLine() {
     length = Math.floor(Math.random() * 7) + 3;
     spacing = Math.floor(Math.random() * 50) + 10;
     buttonRadius = {x: Math.floor(Math.random() * 15) + 10, y: Math.floor(Math.random() * 15) + 10};
-    angle = 0;
+    angle = Math.floor(Math.random() * Math.PI / 2);
 
     buttons = [];
     for (var i = 0; i < length; i++) {

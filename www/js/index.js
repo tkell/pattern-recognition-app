@@ -411,8 +411,8 @@ var app = {
             decreaseAdventure();
         });
 
-        openingVisuals = setInterval(drawOpeningFlair, 3000);
-
+        //openingVisuals = setInterval(drawOpeningFlair, 3000);
+        drawOpeningFlair();
     },
 
 };
