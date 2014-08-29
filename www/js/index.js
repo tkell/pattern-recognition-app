@@ -21,7 +21,7 @@ var settingsStatus = false;
 var captureStatus = false;
 var playbackStatus = false;
 
-var openingVisuals;
+var openingVisuals = true;
 
 var buttonData = [];
 var adventure = 0;
@@ -31,6 +31,10 @@ var width;
 var height;
 
 var synth;
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 // Test image input
 function loadDummyImage() {
@@ -56,6 +60,7 @@ function onCameraSuccess(imageURI) {
 // in order to not get the location services pop-up.
 // Explanation here:  http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app
 function loadRealPicture() {
+    paper.clear();
     navigator.camera.getPicture(onCameraSuccess, onCameraFail,
         {quality: 50, 
          destinationType: Camera.DestinationType.FILE_URI, 
@@ -298,14 +303,13 @@ function updateAdventure() {
 // Dispose of the old image, get a new one.
 function getNew() {
     console.log("clearing paper");
-    paper.clear();
     buttonData = [];
     captureImage();
 }
 
 function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
-    clearInterval(openingVisuals);
+    openingVisuals = false;
 
     $(".title").fadeTo(750, 0.0);
     $(".title").css("visbility", "hidden");
@@ -411,7 +415,6 @@ var app = {
             decreaseAdventure();
         });
 
-        //openingVisuals = setInterval(drawOpeningFlair, 3000);
         drawOpeningFlair();
     },
 
