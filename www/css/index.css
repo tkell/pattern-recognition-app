@@ -100,8 +100,8 @@ body {
     top: 0px; 
     left: 0px;
     position:absolute;
+    display: none;
 }
-
 
 .settings-page {
     z-index: 10;
