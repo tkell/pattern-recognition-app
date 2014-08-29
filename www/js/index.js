@@ -20,8 +20,9 @@
 var settingsStatus = false;
 var captureStatus = false;
 var playbackStatus = false;
-
 var openingVisuals = true;
+
+var fadeTime = 500;
 
 var buttonData = [];
 var adventure = 0;
@@ -142,7 +143,7 @@ function sendDataToServer() {
                         animateButtonSuccess();
                         drawConnectingLines();
                         applyButtonDrawings();
-                        $(".send").fadeTo(750, 0.0);
+                        $(".send").fadeTo(fadeTime, 0.0);
                         $(".send").css("visibility", "hidden");
 
                     } else {
@@ -181,12 +182,12 @@ function createLocation(e) {
 
  function openSettings() {
         $(".settings").css("visibility", "visible");
-        $(".settings").fadeTo(750, 1.0);
+        $(".settings").fadeTo(fadeTime, 1.0);
         settingsStatus = true;
  }
 
  function closeSettings() {
-    $(".settings").fadeTo(750, 0.0, function () {
+    $(".settings").fadeTo(fadeTime, 0.0, function () {
         $(".settings").css("visibility", "hidden");
         settingsStatus = false;
     });
@@ -212,7 +213,11 @@ function toggleSettingsMode() {
     }
 }
 
-function displaySettings() {   
+function displaySettings() {
+
+    $(".settings-fader").css("display", "block");
+    $(".settings-fader").fadeTo(fadeTime, 0.5);
+
     // Display the settings page
     $(".title").css("visibility", "hidden");
     $(".send").css("visibility", "hidden");
@@ -228,7 +233,7 @@ function displaySettings() {
 
     $(".settings-page").css("display", "block");
     $(".settings-page").css("visibility", "visible");
-    $(".settings-page").fadeTo(750, 1.0);
+    $(".settings-page").fadeTo(fadeTime, 1.0);
 
     $(".settings-button").off("tap"); 
     $(".settings-button").on( "tap", function(event) {
@@ -245,12 +250,15 @@ function hideSettings() {
     $(".settings-page").css("display", "none");
     $(".settings-page").css("opacity", 0.0);
 
+    $(".settings-fader").css("opacity", 0.0);
+    $(".settings-fader").css("display", "none");
+
     // For the capture page
     if (captureStatus && !playbackStatus) {
         $(".title").css("display", "block");
         $(".send").css("display", "block");
         $(".send").css("visibility", "visible");
-        $(".send").fadeTo(750, 1.0);
+        $(".send").fadeTo(fadeTime, 1.0);
 
     // For the main page
     } else if (!captureStatus) {
@@ -260,8 +268,8 @@ function hideSettings() {
         $(".title").css("visibility", "visible");
         $(".capture").css("visibility", "visible");   
 
-        $(".title").fadeTo(750, 1.0);       
-        $(".capture").fadeTo(750, 1.0);
+        $(".title").fadeTo(fadeTime, 1.0);       
+        $(".capture").fadeTo(fadeTime, 1.0);
     }
     // For playback
     else if (playbackStatus) {
@@ -311,10 +319,10 @@ function captureImage() {
     closeSettings();  // Unsure if this is the desired behavior
     openingVisuals = false;
 
-    $(".title").fadeTo(750, 0.0);
+    $(".title").fadeTo(fadeTime, 0.0);
     $(".title").css("visbility", "hidden");
 
-    $(".capture").fadeTo(750, 0.0);
+    $(".capture").fadeTo(fadeTime, 0.0);
     $(".capture-button").unbind( "tap");
     $(".capture").css("display", "none");
 
@@ -331,7 +339,7 @@ function activateManualMode() {
         createLocation(e);
     });
 
-    $(".title").fadeTo(750, 1.0, function () {
+    $(".title").fadeTo(fadeTime, 1.0, function () {
         $(".title").fadeTo(3000, 0.0, function() {
             $(".title").css("visibility", "hidden");
         });
@@ -339,7 +347,7 @@ function activateManualMode() {
 
     $(".send").css("visibility", "visible");
     $(".send").css("display", "block");
-    $(".send").fadeTo(750, 1.0);
+    $(".send").fadeTo(fadeTime, 1.0);
     $(".send").on("touchstart", function(e) {
         sendDataToServer();
     });

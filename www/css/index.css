@@ -91,6 +91,17 @@ body {
     opacity: 0;
 }
 
+.settings-fader {
+    z-index: 5;
+    background-color: #000000;
+    opacity: 0.0;
+    width:100%;
+    height:100%;
+    top: 0px; 
+    left: 0px;
+    position:absolute;
+}
+
 
 .settings-page {
     z-index: 10;
