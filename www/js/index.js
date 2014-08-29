@@ -367,6 +367,11 @@ var app = {
         width = window.outerWidth;
         height = window.outerHeight;
 
+        // hopeful hack to prevent scrolling
+        document.body.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, false);
+
         paper = Raphael(0, 0, width, height);
 
         synth = new Synth({
