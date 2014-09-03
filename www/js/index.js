@@ -169,7 +169,7 @@ function sendDataToServer() {
 
                         applyKnownMapping(jsonRes['mapping']);
 
-                        $(".current-mapping").text("current mapping:  " + jsonRes['result']);
+                        $(".current-mapping-name").text(jsonRes['result']);
                         animateButtonSuccess();
                         drawConnectingLines();
                         applyButtonDrawings();
@@ -398,6 +398,10 @@ var app = {
         $(".post-capture").css("font-size", width / 24);
 
         $(".settings-page").css("font-size", width / 24);
+
+        $(".current-mapping-name").css("font-size", width / 18);
+        $(".adventure-value").css("font-size", width / 18);
+        $(".close-settings-button").css("font-size", width / 18);
 
         $(".logo-image").on("tap", function(event) {
             toggleMenu();

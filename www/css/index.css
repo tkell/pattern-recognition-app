@@ -112,6 +112,24 @@ body {
     position:relative;
 }
 
+.current-mapping {
+    text-align:center;
+}
+
+.about {
+    text-align:center;
+}
+
+.adventure {
+    text-align:center;
+}
+
+.close-settings {
+    text-align:center;
+}
+
+
+
 canvas {
     z-index: -1;
 }
