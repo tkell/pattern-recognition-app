@@ -17,7 +17,7 @@
  * under the License.
  */
 
-var settingsStatus = false;
+var menuStatus = false;
 var captureStatus = false;
 var playbackStatus = false;
 var openingVisuals = true;
@@ -44,15 +44,44 @@ function loadDummyImage() {
     activateManualMode();
 }
 
+// Cancel function
 function onCameraFail(e) {
     console.log('failed',e);
+
+    if (!captureStatus) {
+        paper.clear();
+        openingVisuals = true;
+        drawOpeningFlair();
+    } else if (playbackStatus) {
+        // From having an instrument made.
+        closeMenu();
+    } else if (captureStatus && !playbackStatus) {
+        // For the capture page
+        closeMenu();
+    }
 }
 
 function onCameraSuccess(imageURI) {
-    //var image = document.getElementById('myImage');
-    //image.src = imageURI;
-    var c = paper.image(imageURI, 0, 0, width, height);
+    if (!captureStatus) {
+        // From the opening page to the add buttons stage
+        $(".title").css("opacity", 0.0);
+        $(".title").css("visbility", "hidden");
+        paper.clear();
+        openingVisuals = false;
 
+        $(".capture").fadeTo(fadeTime, 0.0);
+        $(".capture-button").unbind( "tap");
+        $(".capture").css("display", "none");
+
+    } else if (playbackStatus) {
+        // From having an instrument made.
+        paper.clear();   
+    } else if (captureStatus && !playbackStatus) {
+        // From the capture page
+        paper.clear();
+    }
+
+    var c = paper.image(imageURI, 0, 0, width, height);
     playbackStatus = false;
     activateManualMode();
 }
@@ -61,7 +90,8 @@ function onCameraSuccess(imageURI) {
 // in order to not get the location services pop-up.
 // Explanation here:  http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app
 function loadRealPicture() {
-    paper.clear();
+    openingVisuals = false;
+    
     navigator.camera.getPicture(onCameraSuccess, onCameraFail,
         {quality: 50, 
          destinationType: Camera.DestinationType.FILE_URI, 
@@ -156,7 +186,6 @@ function sendDataToServer() {
     }
 }
 
-
 function createLocation(e) {
     var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
 
@@ -180,41 +209,28 @@ function createLocation(e) {
     buttonData.push({"location": location, "button": circle});
 };
 
- function openSettings() {
-        $(".settings").css("visibility", "visible");
-        $(".settings").fadeTo(fadeTime, 1.0);
-        settingsStatus = true;
+ function openMenu() {
+        $(".menu").css("visibility", "visible");
+        $(".menu").fadeTo(fadeTime, 1.0);
+        menuStatus = true;
  }
 
- function closeSettings() {
-    $(".settings").fadeTo(fadeTime, 0.0, function () {
-        $(".settings").css("visibility", "hidden");
-        settingsStatus = false;
+ function closeMenu() {
+    $(".menu").fadeTo(fadeTime, 0.0, function () {
+        $(".menu").css("visibility", "hidden");
+        menuStatus = false;
     });
  }
 
-function toggleSettings() {
-    if (settingsStatus) {
-        closeSettings();
+function toggleMenu() {
+    if (menuStatus) {
+        closeMenu();
     } else {
-        openSettings();
-    }
-}
-
-function toggleSettingsMode() {
-    if (captureStatus) {
-        captureStatus = false;
-        $(".pre-capture").css("display", "block");
-        $(".post-capture").css("display", "none");
-    } else {
-        captureStatus = true;
-        $(".pre-capture").css("display", "none");
-        $(".post-capture").css("display", "block");
+        openMenu();
     }
 }
 
 function displaySettings() {
-
     $(".settings-fader").css("display", "block");
     $(".settings-fader").fadeTo(fadeTime, 0.5);
 
@@ -253,15 +269,15 @@ function hideSettings() {
     $(".settings-fader").css("opacity", 0.0);
     $(".settings-fader").css("display", "none");
 
-    // For the capture page
+    
     if (captureStatus && !playbackStatus) {
+        // For the capture page
         $(".title").css("display", "block");
         $(".send").css("display", "block");
         $(".send").css("visibility", "visible");
-        $(".send").fadeTo(fadeTime, 1.0);
-
-    // For the main page
+        $(".send").fadeTo(fadeTime, 1.0);   
     } else if (!captureStatus) {
+        // For the main page
         $(".title").css("display", "block");
         $(".capture").css("display", "block");
 
@@ -271,8 +287,8 @@ function hideSettings() {
         $(".title").fadeTo(fadeTime, 1.0);       
         $(".capture").fadeTo(fadeTime, 1.0);
     }
-    // For playback
     else if (playbackStatus) {
+        // For playback
         $(".title").css("display", "block");
         $(".capture").css("display", "block");
         $(".title").css("visibility", "visible");
@@ -284,11 +300,8 @@ function hideSettings() {
     $(".settings-button").on( "tap", function(event) {
         displaySettings();
     }); 
-    $(".logo").css("margin-top", "50%");
-
-    
+    $(".logo").css("margin-top", "50%");   
 }
-
 
 function increaseAdventure() {
     if (adventure < 4) {
@@ -305,34 +318,24 @@ function decreaseAdventure() {
 }
 
 function updateAdventure() {
+
     $(".adventure-value").text(adventure + 1);
 }
 
 // Dispose of the old image, get a new one.
 function getNew() {
-    console.log("clearing paper");
     buttonData = [];
     captureImage();
 }
 
 function captureImage() {
-    closeSettings();  // Unsure if this is the desired behavior
-    openingVisuals = false;
-
-    $(".title").fadeTo(fadeTime, 0.0);
-    $(".title").css("visbility", "hidden");
-
-    $(".capture").fadeTo(fadeTime, 0.0);
-    $(".capture-button").unbind( "tap");
-    $(".capture").css("display", "none");
-
+    closeMenu();
     loadRealPicture();
     //loadDummyImage();
 }
 
 function activateManualMode() {
-    console.log('Actvating manual button selection...');
-
+    captureStatus = true;
     $(".title").css("visibility", "visible");
     $(".title").text("tap to make buttons");
     $("svg").on("touchstart", function(e) {
@@ -351,7 +354,6 @@ function activateManualMode() {
     $(".send").on("touchstart", function(e) {
         sendDataToServer();
     });
-    closeSettings();
 }
 
 var app = {
@@ -398,12 +400,11 @@ var app = {
         $(".settings-page").css("font-size", width / 24);
 
         $(".logo-image").on("tap", function(event) {
-            toggleSettings();
+            toggleMenu();
         });
 
         $(".capture-button").on("tap", function(event) {
             captureImage();
-            toggleSettingsMode();
         });
 
         $(".new-button").on("tap", function(event) {
