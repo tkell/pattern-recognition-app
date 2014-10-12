@@ -268,7 +268,6 @@ function hideSettings() {
 
     $(".settings-fader").css("opacity", 0.0);
     $(".settings-fader").css("display", "none");
-
     
     if (captureStatus && !playbackStatus) {
         // For the capture page
@@ -295,7 +294,6 @@ function hideSettings() {
         $(".capture").css("visibility", "visible");         
     }
 
-
     $(".settings-button").off("tap"); 
     $(".settings-button").on( "tap", function(event) {
         displaySettings();
@@ -318,7 +316,6 @@ function decreaseAdventure() {
 }
 
 function updateAdventure() {
-
     $(".adventure-value").text(adventure + 1);
 }
 
@@ -351,7 +348,7 @@ function activateManualMode() {
     $(".send").css("visibility", "visible");
     $(".send").css("display", "block");
     $(".send").fadeTo(fadeTime, 1.0);
-    $(".send").on("touchstart", function(e) {
+    $(".send-data-button").on("touchstart", function(e) {
         sendDataToServer();
     });
 }
