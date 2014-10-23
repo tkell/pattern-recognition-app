@@ -37,6 +37,12 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+
 // Test image input
 function loadDummyImage() {
     var dummyImagePath = "img/traffic_test.jpg";
@@ -188,18 +194,23 @@ function sendDataToServer() {
 
 function createLocation(e) {
     var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
+    
+    var pixel = c.getImageData(x, y, 1, 1).data;
+    var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
 
     var lineSize = 75;
     var circleSize = 50;
 
     var line1 = paper.path(["M", location.x - lineSize, location.y, "L", location.x + lineSize, location.y]);
-    line1.attr("stroke", "#90EE90");
+    
+    
+    line1.attr("stroke", hexColor);
     var line2 = paper.path(["M", location.x, location.y - lineSize, "L", location.x, location.y + lineSize]);
-    line2.attr("stroke", "#90EE90");
+    line2.attr("stroke", hexColor);
 
     var circle = paper.circle(location.x, location.y, circleSize);
-    circle.attr("stroke", "#90EE90");
-    circle.attr("fill", "#90EE90");
+    circle.attr("stroke", hexColor);
+    circle.attr("fill", hexColor);
 
     pathString = "M" + location.x + "," + location.y + "L" + location.x + "," + location.y;
     line1.animate({"path": pathString}, 315);
