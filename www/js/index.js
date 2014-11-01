@@ -202,8 +202,6 @@ function createLocation(e) {
     var circleSize = 50;
 
     var line1 = paper.path(["M", location.x - lineSize, location.y, "L", location.x + lineSize, location.y]);
-    
-    
     line1.attr("stroke", hexColor);
     var line2 = paper.path(["M", location.x, location.y - lineSize, "L", location.x, location.y + lineSize]);
     line2.attr("stroke", hexColor);
