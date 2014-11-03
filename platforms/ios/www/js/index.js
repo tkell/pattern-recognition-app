@@ -93,24 +93,15 @@ function onCameraSuccess(imageURI) {
         paper.clear();
     }
 
-    // Best fix here is actually to have a canvas UNDER the raphael paper
-    // Load the image into that as well
-    // and then query that for the color.
-    // BUT NOT TONIGHT.
-
+    // Load image to Canvas, then go.
     var c = paper.image(imageURI, 0, 0, width, height);
-    
 
+
+    // I think that the image is not being scaled correctly!
     colorContext = dummyCanvas.getContext('2d');
     var dummyImage = new Image();
-    // terrible first-pass hacks are us.
     dummyImage.onload = function() { 
-        colorContext.drawImage(dummyImage, 0, 0);
-
-        var pixel = colorContext.getImageData(0, 0, 1, 1).data; 
-        debugPrint(pixel);
-
-        // my actual code!
+        colorContext.drawImage(dummyImage, 0, 0, width, height);
         playbackStatus = false;
         activateManualMode();
     };
@@ -219,13 +210,10 @@ function sendDataToServer() {
 function createLocation(e) {
     var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
 
-    debugPrint("just before getting the image data");
-    var pixel = colorContext.getImageData(location.x, location.y, 1, 1).data; 
-    debugPrint(pixel);
-    var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
-    debugPrint("after we get the pixle and color:" + hexColor);
+    debugPrint(location.x + ' ' + location.y);
 
-    //var hexColor = "#90EE90";
+    var pixel = colorContext.getImageData(location.x, location.y, 1, 1).data; 
+    var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
 
     var lineSize = 75;
     var circleSize = 50;
@@ -424,6 +412,7 @@ var app = {
         dummyCanvas.height = height;
         dummyCanvas.style.zIndex   = -10;
         dummyCanvas.style.position = "absolute";
+
 
         synth = new Synth({
             context: tsw.context(),

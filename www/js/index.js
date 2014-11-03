@@ -95,11 +95,11 @@ function onCameraSuccess(imageURI) {
 
     // Load image to Canvas, then go.
     var c = paper.image(imageURI, 0, 0, width, height);
+
     colorContext = dummyCanvas.getContext('2d');
     var dummyImage = new Image();
     dummyImage.onload = function() { 
-        colorContext.drawImage(dummyImage, 0, 0);
-        var pixel = colorContext.getImageData(0, 0, 1, 1).data; 
+        colorContext.drawImage(dummyImage, 0, 0, width, height);
         playbackStatus = false;
         activateManualMode();
     };
@@ -407,6 +407,7 @@ var app = {
         dummyCanvas.height = height;
         dummyCanvas.style.zIndex   = -10;
         dummyCanvas.style.position = "absolute";
+
 
         synth = new Synth({
             context: tsw.context(),
