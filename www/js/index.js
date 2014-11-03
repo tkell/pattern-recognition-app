@@ -49,6 +49,11 @@ function rgbToHex(r, g, b) {
     return ((r << 16) | (g << 8) | b).toString(16);
 }
 
+function rgbToGrey(r, g, b) {
+    var grey = (Math.max(r, g, b) + Math.min(r, g, b)) / 2
+    return rgbToHex(grey, grey, grey);
+}
+
 // Test image input
 function loadDummyImage() {
     var dummyImagePath = "img/traffic_test.jpg";
@@ -144,11 +149,7 @@ function drawConnectingLines() {
 
 function animateButtonSuccess() {
     for (var i = 0; i < buttonData.length; i++) {
-        // Get the color back;
-        var currentColor = buttonData[i].button.attr("fill");
-        buttonData[i].button.animate({"stroke": currentColor}, 1500);
-        buttonData[i].button.animate({"fill-opacity": 0.1}, 1500);
-        buttonData[i].button.animate({"fill": "#FFFFFF"}, 4500);
+        buttonData[i].button.animate({"fill-opacity": 0.66}, 2500);
     }
 }
 
@@ -211,11 +212,8 @@ function createLocation(e) {
     var pixel = colorContext.getImageData(location.x, location.y, 1, 1).data; 
     var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
 
-    var rawColor = pixel[0] + pixel[1] + pixel[2];
-    var borderColor = "#FFFFFF";
-    if (rawColor >= 384) {
-        borderColor = "#000000";
-    }
+    // get the difference, in greyscale
+    borderColor = "#" + ("000000" + rgbToGrey(256 - pixel[0], 256 - pixel[1], 256 - pixel[2])).slice(-6);
 
     var lineSize = 75;
     var circleSize = 50;
