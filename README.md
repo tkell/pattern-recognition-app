@@ -1,4 +1,4 @@
-pattern-recognition-app
+pattern
 =======================
 This is / will be the iOS app for my MA thesis.  
 

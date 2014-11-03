@@ -28,10 +28,16 @@ var buttonData = [];
 var adventure = 0;
 
 var paper;
+var dummyCanvas;
+var colorContext;
 var width;
 var height;
 
 var synth;
+
+function debugPrint(string) {
+    $(".logo-image").text(string);
+}
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -87,14 +93,32 @@ function onCameraSuccess(imageURI) {
         paper.clear();
     }
 
+    // Best fix here is actually to have a canvas UNDER the raphael paper
+    // Load the image into that as well
+    // and then query that for the color.
+    // BUT NOT TONIGHT.
+
     var c = paper.image(imageURI, 0, 0, width, height);
-    playbackStatus = false;
-    activateManualMode();
+    
+
+    colorContext = dummyCanvas.getContext('2d');
+    var dummyImage = new Image();
+    // terrible first-pass hacks are us.
+    dummyImage.onload = function() { 
+        colorContext.drawImage(dummyImage, 0, 0);
+
+        var pixel = colorContext.getImageData(0, 0, 1, 1).data; 
+        debugPrint(pixel);
+
+        // my actual code!
+        playbackStatus = false;
+        activateManualMode();
+    };
+    dummyImage.src = imageURI;
+
 }
 
-// Had to remove EXIF code from CDVCamera.m, 
-// in order to not get the location services pop-up.
-// Explanation here:  http://stackoverflow.com/questions/17253139/how-to-remove-location-services-request-from-phonegap-ios-6-app
+// Will need to get rid of camera access thing.  Might be EXIF location again.
 function loadRealPicture() {
     openingVisuals = false;
     
@@ -194,9 +218,14 @@ function sendDataToServer() {
 
 function createLocation(e) {
     var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
-    
-    var pixel = c.getImageData(x, y, 1, 1).data;
+
+    debugPrint("just before getting the image data");
+    var pixel = colorContext.getImageData(location.x, location.y, 1, 1).data; 
+    debugPrint(pixel);
     var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
+    debugPrint("after we get the pixle and color:" + hexColor);
+
+    //var hexColor = "#90EE90";
 
     var lineSize = 75;
     var circleSize = 50;
@@ -380,8 +409,8 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
 
     onDeviceReady: function() {
-        width = window.outerWidth;
-        height = window.outerHeight;
+        width = window.screen.width;
+        height = window.screen.height;
 
         // hopeful hack to prevent scrolling
         document.body.addEventListener('touchmove', function(e) {
@@ -389,6 +418,12 @@ var app = {
         }, false);
 
         paper = Raphael(0, 0, width, height);
+
+        dummyCanvas = document.createElement('canvas');
+        dummyCanvas.width = width;
+        dummyCanvas.height = height;
+        dummyCanvas.style.zIndex   = -10;
+        dummyCanvas.style.position = "absolute";
 
         synth = new Synth({
             context: tsw.context(),
