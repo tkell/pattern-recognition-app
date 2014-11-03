@@ -96,8 +96,6 @@ function onCameraSuccess(imageURI) {
     // Load image to Canvas, then go.
     var c = paper.image(imageURI, 0, 0, width, height);
 
-
-    // I think that the image is not being scaled correctly!
     colorContext = dummyCanvas.getContext('2d');
     var dummyImage = new Image();
     dummyImage.onload = function() { 
@@ -146,7 +144,9 @@ function drawConnectingLines() {
 
 function animateButtonSuccess() {
     for (var i = 0; i < buttonData.length; i++) {
-        buttonData[i].button.animate({"fill": "#00FF00"}, 1500);
+        // Get the color back;
+        var currentColor = buttonData[i].button.attr("fill");
+        buttonData[i].button.animate({"stroke": currentColor}, 1500);
         buttonData[i].button.animate({"fill-opacity": 0.1}, 1500);
         buttonData[i].button.animate({"fill": "#FFFFFF"}, 4500);
     }
@@ -187,7 +187,6 @@ function sendDataToServer() {
                 if (req.readyState === 4) {
                     if (req.status == 0 || (req.status >= 200 && req.status < 400)) {
                         var jsonRes = JSON.parse(req.responseText);
-
                         applyKnownMapping(jsonRes['mapping']);
 
                         $(".current-mapping-name").text(jsonRes['result']);
@@ -209,11 +208,14 @@ function sendDataToServer() {
 
 function createLocation(e) {
     var location = {'x': e.originalEvent.pageX, 'y': e.originalEvent.pageY};
-
-    debugPrint(location.x + ' ' + location.y);
-
     var pixel = colorContext.getImageData(location.x, location.y, 1, 1).data; 
     var hexColor = "#" + ("000000" + rgbToHex(pixel[0], pixel[1], pixel[2])).slice(-6);
+
+    var rawColor = pixel[0] + pixel[1] + pixel[2];
+    var borderColor = "#FFFFFF";
+    if (rawColor >= 384) {
+        borderColor = "#000000";
+    }
 
     var lineSize = 75;
     var circleSize = 50;
@@ -224,7 +226,7 @@ function createLocation(e) {
     line2.attr("stroke", hexColor);
 
     var circle = paper.circle(location.x, location.y, circleSize);
-    circle.attr("stroke", hexColor);
+    circle.attr("stroke", borderColor);
     circle.attr("fill", hexColor);
 
     pathString = "M" + location.x + "," + location.y + "L" + location.x + "," + location.y;
