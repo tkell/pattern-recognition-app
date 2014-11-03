@@ -1,0 +1,27 @@
+2014-10-31 20:29:33.812 Pattern[3185:25548] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/thorkell/Library/Developer/CoreSimulator/Devices/5DE811F6-EB6B-4B60-87E1-180DB33879EF/data/Containers/Data/Application/F7146045-21E3-4DED-AB32-CB17CE0F2777/Library/Cookies/Cookies.binarycookies
+2014-10-31 20:29:35.154 Pattern[3185:25548] Apache Cordova native platform version 3.6.3 is starting.
+2014-10-31 20:29:35.154 Pattern[3185:25548] Multi-tasking -> Device: YES, App: YES
+2014-10-31 20:29:35.604 Pattern[3185:25548] Unlimited access to network resources
+2014-10-31 20:29:35.685 Pattern[3185:25548] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+
+2014-10-31 20:29:37.066 Pattern[3185:25667] Terminating since there is no system app.
+2014-10-31 20:38:41.904 Pattern[3474:28579] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/thorkell/Library/Developer/CoreSimulator/Devices/5DE811F6-EB6B-4B60-87E1-180DB33879EF/data/Containers/Data/Application/D683BCEA-32AC-4751-98B3-01CFF9D8ADC8/Library/Cookies/Cookies.binarycookies
+2014-10-31 20:38:42.077 Pattern[3474:28579] Apache Cordova native platform version 3.6.3 is starting.
+2014-10-31 20:38:42.078 Pattern[3474:28579] Multi-tasking -> Device: YES, App: YES
+2014-10-31 20:38:42.139 Pattern[3474:28579] Unlimited access to network resources
+2014-10-31 20:38:42.199 Pattern[3474:28579] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+
+2014-10-31 20:38:56.023 Pattern[3474:28579] Resetting plugins due to page load.
+>>>> frameSizeChanged = 4096
+>>>> frameSizeChanged = 4096
+2014-10-31 20:39:00.976 Pattern[3474:28579] Finished load of: file:///Users/thorkell/Library/Developer/CoreSimulator/Devices/5DE811F6-EB6B-4B60-87E1-180DB33879EF/data/Containers/Bundle/Application/F0BC0AA6-6980-4599-94CA-076C369B19FE/Pattern.app/www/index.html

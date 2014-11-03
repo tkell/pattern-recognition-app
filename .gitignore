@@ -1,7 +1,2 @@
 .DS_Store
 .cordova/
-platforms/
-plugins/
-node_modules/
-www/img
-hooks
