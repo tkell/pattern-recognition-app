@@ -1,7 +1,5 @@
 // Functions for opening screen flair
 
-
-
 function drawOpeningFlair() {
     numPoints = getRandomInt(4, 10);
     points = [];
