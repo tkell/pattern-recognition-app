@@ -10,7 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
 
-     <platform name="ios">
+    <platform name="ios">
               <!-- iOS 7.0+ -->
               <!-- iPhone / iPod Touch  -->
               <icon src="res/ios/icon-60.png" width="60" height="60" />
@@ -18,5 +18,5 @@
               <!-- iPad -->
               <icon src="res/ios/icon-76.png" width="76" height="76" />
               <icon src="res/ios/icon-76@2x.png" width="152" height="152" />
-        </platform>
+    </platform>
 </widget>
