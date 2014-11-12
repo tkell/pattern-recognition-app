@@ -37,3 +37,66 @@ function applyKnownMapping(returnedButtonData) {
         }
     }
 }
+
+
+// Via http://stackoverflow.com/questions/5073799/how-to-sort-a-javascript-array-of-objects-by-nested-object-property
+var deepSort = function (prop, arr) {
+    prop = prop.split('.');
+    var len = prop.length;
+
+    arr.sort(function (a, b) {
+        var i = 0;
+        while( i < len ) { a = a[prop[i]]; b = b[prop[i]]; i++; }
+        if (a < b) {
+            return -1;
+        } else if (a > b) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    return arr;
+};
+
+var scales = [
+    [2, 2, 3, 2, 3],
+    [2, 2, 1, 2, 2, 2, 1],
+    [2, 1, 2, 2, 1, 2, 2],
+    [2, 1],
+    [1]
+];
+
+function freqFromMidi(note) {
+    exponent = (note - 69) / 12.0;
+    return Math.pow(2, exponent) * 440;
+}
+
+function applyDefaultMapping() {
+    // sort!
+    sortedbuttonData = buttonData;
+    sortedbuttonData = deepSort('location.y', sortedbuttonData);
+    sortedbuttonData = deepSort('location.x', sortedbuttonData);
+
+    // pick a scale based on Adventure
+    var theScale = scales[adventure];
+    var note = 60;
+
+    // line up the frequencies
+    var frequencies = []
+    frequencies.push(freqFromMidi(note))
+    for (var i = 1; i < sortedbuttonData.length; i++) {
+        var index = i % theScale.length
+        note = note + theScale[index]
+        frequencies.push(freqFromMidi(note))
+    }
+    
+    // find the match in sortedbuttonData, and map it using the frequencies list
+    for (var i = 0; i < buttonData.length; i++) {
+        for (var j = 0; j < sortedbuttonData.length; j++) {
+            if (buttonData[i].location.x == sortedbuttonData[j].location.x && buttonData[i].location.y == sortedbuttonData[j].location.y) {
+                makeAndMap(buttonData[i], frequencies[j]);
+                break;
+            }
+        }
+    }
+}

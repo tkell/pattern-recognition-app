@@ -147,9 +147,20 @@ function sendDataToServer() {
 
     var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
     preppedButtonData = prepButtonData();
-
     var body = JSON.stringify(preppedButtonData);
-    console.log('button data prepared');
+
+    // TRYING THIS CODE OUT, because I want to debug it tonight, and not networking code
+    applyDefaultMapping();
+    $(".current-mapping-name").text('offline');
+    animateButtonSuccess();
+    drawLinesAfterLoad();
+    applyButtonDrawings();
+    $(".send").fadeTo(fadeTime, 0.0);
+    $(".send").css("visibility", "hidden");
+    console.log('Response returned with non-OK status, using offline mapping');
+    return
+
+    // REAL CODE COMES BACK HERE
     var req = new XMLHttpRequest();
     if ('withCredentials' in req) {
         req.open('POST', url, true);
@@ -168,9 +179,16 @@ function sendDataToServer() {
                         $(".send").css("visibility", "hidden");
 
                     } else {
-                        $(".send").text("error!");
-                        console.log('Response returned with non-OK status');
+                        applyDefaultMapping();
+                        $(".current-mapping-name").text('offline');
+                        animateButtonSuccess();
+                        drawLinesAfterLoad();
+                        applyButtonDrawings();
+                        $(".send").fadeTo(fadeTime, 0.0);
+                        $(".send").css("visibility", "hidden");
+                        console.log('Response returned with non-OK status, using offline mapping');
                     }
+                } else {
                 }
             };
         req.send(body);
