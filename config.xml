@@ -19,4 +19,7 @@
               <icon src="res/ios/icon-76.png" width="76" height="76" />
               <icon src="res/ios/icon-76@2x.png" width="152" height="152" />
     </platform>
+    <feature name="NetworkStatus">
+              <param name="ios-package" value="CDVConnection" />
+    </feature>
 </widget>

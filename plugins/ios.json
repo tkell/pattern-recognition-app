@@ -36,6 +36,12 @@
                             "xml": "false",
                             "count": 1
                         }
+                    ],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": "true",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -48,6 +54,10 @@
                         },
                         {
                             "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -67,6 +77,9 @@
     },
     "installed_plugins": {
         "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.example.pattern"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.example.pattern"
         }
     },

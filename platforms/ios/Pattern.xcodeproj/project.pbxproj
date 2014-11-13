@@ -41,6 +41,9 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D4A9B158A7AF41A0AA1C44ED /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BBFEEC14CD4F1B80ED1126 /* CoreLocation.framework */; };
 		E5C9C4C29F8A4342AE5AB276 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 30FECA6CFD124B85BB12DF53 /* CDVJpegHeaderWriter.m */; };
+		90FB7511CDE14F7D994BB773 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D77FAAD1177741A7BAC98940 /* CDVConnection.m */; };
+		D7460673676F4D088BCCAC44 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F893E2F5E241249E8A7771 /* CDVReachability.m */; };
+		53F8992163244771980602CD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBC3CA631514C55BFA71A4D /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +114,11 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Pattern/config.xml; sourceTree = "<group>"; };
 		FAAA1060FD7A49F482FB7115 /* ImageIO.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		D77FAAD1177741A7BAC98940 /* CDVConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVConnection.m"; path = "org.apache.cordova.network-information/CDVConnection.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		F7F893E2F5E241249E8A7771 /* CDVReachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVReachability.m"; path = "org.apache.cordova.network-information/CDVReachability.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		5E694E2FF78D4CB68CC74C8B /* CDVConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVConnection.h"; path = "org.apache.cordova.network-information/CDVConnection.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		968F38EE298040AF9444A4A4 /* CDVReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVReachability.h"; path = "org.apache.cordova.network-information/CDVReachability.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		EBBC3CA631514C55BFA71A4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +132,7 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				B2E6D7F5A57C405BA5451C98 /* ImageIO.framework in Frameworks */,
 				D4A9B158A7AF41A0AA1C44ED /* CoreLocation.framework in Frameworks */,
+				53F8992163244771980602CD /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +227,7 @@
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				FAAA1060FD7A49F482FB7115 /* ImageIO.framework */,
 				58BBFEEC14CD4F1B80ED1126 /* CoreLocation.framework */,
+				EBBC3CA631514C55BFA71A4D /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,6 +248,10 @@
 				169ED5E39119473393B44030 /* CDVCamera.h */,
 				1B950DACD79D45028071862F /* CDVJpegHeaderWriter.h */,
 				2C43A245359146ABA06B34B1 /* CDVExif.h */,
+				D77FAAD1177741A7BAC98940 /* CDVConnection.m */,
+				F7F893E2F5E241249E8A7771 /* CDVReachability.m */,
+				5E694E2FF78D4CB68CC74C8B /* CDVConnection.h */,
+				968F38EE298040AF9444A4A4 /* CDVReachability.h */,
 			);
 			name = Plugins;
 			path = Pattern/Plugins;
@@ -434,6 +448,8 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				2953FF94FDB44BBDAF006198 /* CDVCamera.m in Sources */,
 				E5C9C4C29F8A4342AE5AB276 /* CDVJpegHeaderWriter.m in Sources */,
+				90FB7511CDE14F7D994BB773 /* CDVConnection.m in Sources */,
+				D7460673676F4D088BCCAC44 /* CDVReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

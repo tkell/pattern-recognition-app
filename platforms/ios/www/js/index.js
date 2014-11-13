@@ -140,16 +140,7 @@ function prepButtonData() {
     return {'buttonData': cleanedButtonData, 'adventure': adventure};
 }
 
-function sendDataToServer() {
-    // Remove the tap to make a button
-    $("svg").off("touchstart");
-    playbackStatus = true;
-
-    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
-    preppedButtonData = prepButtonData();
-    var body = JSON.stringify(preppedButtonData);
-
-    // TRYING THIS CODE OUT, because I want to debug it tonight, and not networking code
+function mapOffline() {
     applyDefaultMapping();
     $(".current-mapping-name").text('offline');
     animateButtonSuccess();
@@ -157,41 +148,49 @@ function sendDataToServer() {
     applyButtonDrawings();
     $(".send").fadeTo(fadeTime, 0.0);
     $(".send").css("visibility", "hidden");
-    console.log('Response returned with non-OK status, using offline mapping');
-    return
+}
 
-    // REAL CODE COMES BACK HERE
-    var req = new XMLHttpRequest();
-    if ('withCredentials' in req) {
-        req.open('POST', url, true);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.onreadystatechange = function() {
-                if (req.readyState === 4) {
-                    if (req.status == 0 || (req.status >= 200 && req.status < 400)) {
-                        var jsonRes = JSON.parse(req.responseText);
-                        applyKnownMapping(jsonRes['mapping']);
+function mapFromData(jsonRes) {
+    applyKnownMapping(jsonRes['mapping']);
+    $(".current-mapping-name").text(jsonRes['result']);
+    animateButtonSuccess();
+    drawLinesAfterLoad();
+    applyButtonDrawings();
+    $(".send").fadeTo(fadeTime, 0.0);
+    $(".send").css("visibility", "hidden");
+}
 
-                        $(".current-mapping-name").text(jsonRes['result']);
-                        animateButtonSuccess();
-                        drawLinesAfterLoad();
-                        applyButtonDrawings();
-                        $(".send").fadeTo(fadeTime, 0.0);
-                        $(".send").css("visibility", "hidden");
 
-                    } else {
-                        applyDefaultMapping();
-                        $(".current-mapping-name").text('offline');
-                        animateButtonSuccess();
-                        drawLinesAfterLoad();
-                        applyButtonDrawings();
-                        $(".send").fadeTo(fadeTime, 0.0);
-                        $(".send").css("visibility", "hidden");
-                        console.log('Response returned with non-OK status, using offline mapping');
+function sendDataToServer() {
+    // Remove the tap to make a button
+    $("svg").off("touchstart");
+    playbackStatus = true;
+    var url = "http://quiet-wildwood-4860.herokuapp.com/analysis";
+    preppedButtonData = prepButtonData();
+    var body = JSON.stringify(preppedButtonData);
+
+    // If we have no internet, do a basic mapping
+    if (navigator.network.connection.type == Connection.NONE) {
+        mapOffline();
+        return
+    } else {
+        // if we have internet, try a real mapping!
+        var req = new XMLHttpRequest();
+        if ('withCredentials' in req) {
+            req.open('POST', url, true);
+            req.setRequestHeader('Content-Type', 'application/json');
+            req.onreadystatechange = function() {
+                    if (req.readyState === 4) {
+                        if (req.status == 0 || (req.status >= 200 && req.status < 400)) {
+                            var jsonRes = JSON.parse(req.responseText);
+                            mapFromData(jsonRes)
+                        } else {
+                            mapOffline();
+                        }
                     }
-                } else {
-                }
-            };
-        req.send(body);
+                };
+            req.send(body);
+        }
     }
 }
 
